@@ -1,0 +1,65 @@
+<odoo>
+    <data>
+       <record id="send_intimation_mail_template" model="mail.template">
+            <field name="name">Send Intimation</field>
+            <!--<field name="email_from">${object.env.user or ''}</field>-->
+            <!--<field name="email_to">${object.sale_id.partner_id.email or '' and object.sale_id.user_id.partner_id.id}</field>-->
+            <field name="subject">Send Intimation</field>
+           <!--<field name="partner_to">${object.sale_id.partner_id.id or '' and object.sale_id.user_id.partner_id.id or ''}</field>-->
+            <field name="model_id" ref="qms_stock_picking.model_stock_picking"/>
+            <!--<field name="report_name">${'Report'}</field>-->
+            <!--<field name="report_template" ref="gts_nidra_hotel_crm.confirm_line_report_view"/>-->
+                <field name="body_html"><![CDATA[
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                <br/>
+        <p>Hi ${object.sale_id.partner_id.name or ''},</p>
+        <p>Please find details of transport, against Sale order
+        <b>${object.sale_id.name or ''}</p>
+        <p>
+            </br>
+            </br>
+            <table border="1" cellspacing="1" cellpadding="4"  class="table table-striped">
+            <thead>
+            <tr>
+            <th><center><h5>Transport Number</h5></center></th>
+            <th><center><h5>Tracking Number</h5></center></th>
+            <th><center><h5>Vehicle Number</h5><center></th>
+            <th><center><h5>PO Number</h5><center></th>
+            <th><center><h5>Products:</h5><center></th>
+            </tr>
+            </thead>
+            <tbody>
+            <td>${object.transport_num or ''}</td>
+            <td>${object.tracking_number or ''}</td>
+            <td>${object.vehicle_no or ''}</td>
+            <td>${object.sale_id.po_number or ''}</td>
+            <td>
+                % for pro in object.move_lines:
+                    ${pro.product_id.name},
+                % endfor
+            </td>
+            </tbody>
+            </table>
+
+        </p>
+        <p></p>
+        <p></p>
+
+            <p style="color:#9E588B;">Powered by <a target="_blank" href="https://www.odoo.com">Odoo</a>.</p>
+
+   <br/>
+
+  Thanks & Regards, <br/>
+
+  <p></p>
+
+<br/>
+
+</p>
+
+</div>
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

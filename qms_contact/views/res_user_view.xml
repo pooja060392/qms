@@ -1,0 +1,92 @@
+<odoo>
+    <data>
+        <record id="inherit_res_user_form" model="ir.ui.view">
+            <field name="name">res.users.form</field>
+            <field name="model">res.users</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <field name="partner_id" position="after">
+                        <field name="is_salesperson"/>
+                        <field name="sale_target" attrs="{'invisible': [('is_salesperson','=', False)]}"/>
+                        <field name="sale_amount" attrs="{'invisible': [('is_salesperson','=',False)]}"/>
+                        <field name="used_sale_amt" readonly="1" attrs="{'invisible': [('is_salesperson','=',False)]}"/>
+                        <field name="remaining_sale_amt" readonly="1" attrs="{'invisible': [('is_salesperson','=',False)]}"/>
+                    </field>
+                </data>
+            </field>
+        </record>
+
+        <!--==========================user tree view=====================================-->
+
+        <record id="base.view_users_tree" model="ir.ui.view">
+            <field name="name">res.users.tree</field>
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <tree string="Users">
+                    <field name="name"/>
+                    <field name="login"/>
+                    <field name="lang"/>
+                    <field name="login_date"/>
+                    <field name="is_salesperson"/>
+                    <!--<field name="sale_target"/>-->
+                    <!--<field name="sale_amount"/>-->
+                    <!--<field name="used_sale_amt"/>-->
+                    <!--<field name="remaining_sale_amt"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record id="res_users_tree_for_salesperson" model="ir.ui.view">
+            <field name="name">res.users.tree</field>
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <tree string="Users">
+                    <field name="name"/>
+                    <!--<field name="login"/>-->
+                    <!--<field name="lang"/>-->
+                    <!--<field name="login_date"/>-->
+                    <!--<field name="is_salesperson"/>-->
+                    <!--<field name="sale_target"/>-->
+                    <field name="sale_amount"/>
+                    <field name="used_sale_amt"/>
+                    <field name="remaining_sale_amt"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--==========================menu for salesperson============================-->
+
+        <record id="action_res_users_saleperson_form" model="ir.actions.act_window">
+            <field name="name">Salesperson</field>
+            <field name="res_model">res.users</field>
+             <field name="domain">[('is_salesperson','=', True)]</field>
+            <field name="context">{'create': False,'edit': False}</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="sale.view_order_tree"/>
+        </record>
+
+        <record id="action_saleperson_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="res_users_tree_for_salesperson"/>
+            <field name="act_window_id" ref="action_res_users_saleperson_form"/>
+        </record>
+
+        <record id="action_saleperson_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="base.view_users_form"/>
+            <field name="act_window_id" ref="action_res_users_saleperson_form"/>
+        </record>
+
+        <menuitem
+            action="action_res_users_saleperson_form"
+            id="menu_salesperson"
+            name="Salesperson"
+            parent="crm.crm_menu_config" sequence="5"/>
+
+    </data>
+</odoo>

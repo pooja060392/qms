@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+        <record id="purchase_order_form_view_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <!--<button name="button_approve" position="after">-->
+                    <!--<button name="finance"-->
+                            <!--string="Finance Approve"-->
+                            <!--type="object"-->
+                            <!--groups="account.group_account_invoice"-->
+                            <!--class="oe_highlight"-->
+                            <!--attrs="{'invisible': [('to_approve', '=', True)]}"-->
+                            <!--/>-->
+                <!--</button>-->
+                <!--<button name="button_approve" position="replace">-->
+                    <!--<button name="button_approve" type="object" states='to approve' string="Approve Order" class="oe_highlight"-->
+                            <!--attrs="{'invisible': [('to_approve', '!=', True)]}"-->
+                            <!--groups="purchase_order_approval.group_purchase_supervisor, purchase_order_approval.group_procurement_manager,-->
+                            <!--purchase_order_approval.group_project_manager, purchase_order_approval.group_company_ceo"/>-->
+                <!--</button>-->
+                <field name="date_order" position="after">
+                    <field name="project_id" invisible="1"/>
+                    <field name="sector_id" invisible="1"/>
+                </field>
+                <field name="fiscal_position_id" position="after">
+                    <field name="approved_by" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                    <field name="status_po" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                    <field name="date_approve" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                    <field name="created_by" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                    <field name="to_approve" invisible="1"/>
+                </field>
+                <field name="product_uom" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

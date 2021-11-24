@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="purchase_order_gst_form_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.gst.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='taxes_id']" position="after">
+                <field name="hsn_id" options="{
+                    'no_create_edit':True,
+                    'no_open': True,
+                    'no_create': True
+                }"
+                />
+<!--                <field name="cgst" />-->
+<!--                <field name="sgst" />-->
+<!--                <field name="igst" />-->
+            </xpath>
+            <xpath expr="//form//field[@name='partner_id']" position = 'replace'>
+                <field name="partner_id"
+                    context="{
+                        'search_default_supplier':1,
+                        'default_supplier':1,
+                        'default_customer':0
+                    }"
+                    domain="[('supplier','=',True)]"
+                    options="{
+                        'no_create_edit':True,
+                        'no_open': True,
+                        'no_create': True
+                    }"
+                />
+            </xpath>
+            <xpath expr="//field[@name='order_line']//form//field[@name='price_unit']" position = 'after'>
+                <field name="hsn_id"
+                />
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='product_id']" position = 'replace'>
+                <field name="product_id"
+                attrs="{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}"
+                context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}"
+                options="{
+                'no_create_edit':True,
+                'no_open': True,
+                'no_create': True}"/>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

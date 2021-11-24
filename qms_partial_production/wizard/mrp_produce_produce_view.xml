@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+	<record id="view_mrp_product_produce_wizard_partial" model="ir.ui.view">
+		<field name="name">mrp.product.produce.inherit</field>
+		<field name="model">mrp.product.produce</field>
+		<field name="inherit_id" ref="mrp.view_mrp_product_produce_wizard" />
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='product_qty']" position="replace">
+				<field name="product_qty"/>
+			</xpath>
+		</field>
+	</record>
+
+</odoo>

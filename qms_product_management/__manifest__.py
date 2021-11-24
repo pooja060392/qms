@@ -1,0 +1,31 @@
+{
+    'name': 'QMS Product Management',
+    'version': '1.0',
+    'category': '',
+    'sequence': 75,
+    'summary': 'Product Management',
+    'description': "",
+    'depends': ['product','base','stock','mrp','sale','l10n_in', 'qms_sale_orders'],
+    'data': [
+        'security/security_view.xml',
+        'security/ir.model.access.csv',
+        'data/scheduled_action_view.xml',
+        'data/msp_master_data.xml',
+        # 'wizard/approval_wizard_view.xml',
+        # 'wizard/product_approval_mail_template.xml',
+        # 'wizard/create_display_order.xml',
+        'wizard/mrp_update_wizard.xml',
+        # 'views/sample_stock_form_view.xml',
+        'views/product_msp_master_view.xml',
+        'data/msp_master_data.xml',
+        'views/product_template_view.xml',
+        'views/msp_scheduler.xml',
+        # 'views/product_approved_mail_template.xml',
+        # 'views/product_reject_mail_template.xml',
+
+
+    ],
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+}

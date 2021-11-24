@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<report
+			id="gstr_export_report"
+			model="account.move"
+			string="GSTR-Export"
+			report_type="qweb-pdf"
+			name="account.gstr.export.xlsx"
+			file="account.gstr.export.xlsx"
+			attachment_use="False"
+		    menu="False"
+		/>
+	</data>
+</odoo>

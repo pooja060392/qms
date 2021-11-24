@@ -1,0 +1,72 @@
+<odoo>
+    <data>
+
+        <record id="template_for_order_confirmation" model="mail.template">
+            <field name="name">Send Order Confirmation Mail</field>
+            <!--<field name="email_from">${object.order_id.partner_id.email or ''}</field>-->
+            <!--<field name="email_to">${object.user_id.partner_id.email or ''}</field>-->
+            <field name="subject">Order ${object.name or ''} has been confirmed</field>
+            <field name="model_id" ref="qms_sale_orders.model_sale_order"/>
+            <field name="body_html"><![CDATA[
+                    <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+
+                    <br/>
+        <p>Hi,</p>
+        <p>The order number, ${object.name or ''} is Confirmed.</p>
+
+
+            <p style="color:#9E588B;">Powered by <a target="_blank" href="https://www.odoo.com">Odoo</a>.</p>
+
+   <br/>
+
+  Thanks & Regards, <br/>
+
+  <p></p>
+
+<br/>
+
+</p>
+
+</div>
+            ]]></field>
+        </record>
+
+            <!--EMAIL : SP to Design user-->
+       <record id="send_for_design_mail_template" model="mail.template">
+            <field name="name">Send for Design</field>
+            <!--<field name="email_from">${object.order_id.partner_id.email or ''}</field>-->
+            <!--<field name="email_to">${object.user_id.partner_id.email or ''}</field>-->
+            <field name="subject">Design against ${object.name or ''} has been submitted</field>
+            <field name="model_id" ref="qms_sale_orders.model_sale_order"/>
+                <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+
+<br/>
+        <p>Hi,</p>
+         <p>Artwork/Design is required for the Sale <b>${object.name or ''}</b>  </p>
+         <p>Please review the Sale and Design the Artwork.
+
+
+            <p>Please follow the below link.</p>
+                <p>
+                <a href="design_url" style="background-color: #9E588B; margin-top: 5px; padding: 10px;
+                text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;">Click Here</a>
+                </p>
+
+
+   <br/>
+
+  Thanks & Regards, <br/>
+
+  <p></p>
+
+<br/>
+
+</p>
+
+</div>
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="invoice_form_inherit_link" model="ir.ui.view">
+            <field name="name">account.invoice.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref = 'account.invoice_form'/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[2]/group/group[2]/field[@name='origin']" position="after">
+                    <field name="lead_id" readonly="1"
+                           attrs="{'invisible': [('lead_flow', '=', False)]}"/>
+                    <field name="lead_flow" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_move_form_inherit_link" model="ir.ui.view">
+            <field name="name">account.move.form.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref = 'account.view_move_form'/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='ref']" position="after">
+                    <field name="lead_id" readonly="1"
+                           attrs="{'invisible': [('lead_flow', '=', False)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="lead_flow" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

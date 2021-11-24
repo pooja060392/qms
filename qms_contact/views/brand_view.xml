@@ -1,0 +1,42 @@
+<odoo>
+    <data>
+        <!-- ===========form =================-->
+        <record id="view_brand_form" model="ir.ui.view">
+            <field name="name">brand.form</field>
+            <field name="model">brand</field>
+            <field name="arch" type="xml">
+                <form>
+                   <sheet>
+                       <group>
+                           <field name="name" required="1"/>
+                       </group>
+                   </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- ===========tree =================-->
+        <record id="view_brand_tree" model="ir.ui.view">
+            <field name="name">brand.tree</field>
+            <field name="model">brand</field>
+            <field name="arch" type="xml">
+                <tree>
+                   <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_brand" model="ir.actions.act_window">
+            <field name="name">Brands</field>
+            <field name="res_model">brand</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_brand_tree"/>
+        </record>
+
+         <menuitem
+            action="action_brand"
+            id="menu_brand" name="Brands"
+            parent="contacts.res_partner_menu_config" sequence="3"/>
+
+    </data>
+</odoo>

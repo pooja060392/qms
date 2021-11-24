@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mrp_production_tree_view_inherit_partial" model="ir.ui.view">
+        <field name="name">mrp.production.tree.inherit</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="product_qty" position="replace">
+                <field name="product_qty" sum="Qty To Produce" string="Qty To Produce"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="mrp_production_form_view_inherit_partial" model="ir.ui.view">
+        <field name="name">mrp.production.form.inherit</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <!--<button name="open_produce_product" position="replace">-->
+                <!--<button name="open_produce_product"-->
+                        <!--type="object" string="Produce" class="oe_highlight"-->
+                        <!--attrs="{'invisible': ['|', ('check_to_done', '=', True), '|',-->
+                        <!--('state', 'in', ('done', 'cancel')), ('routing_id', '=', False)]}"/>-->
+            <!--</button>-->
+
+            <!--Removed Post Inventory button-->
+            <!--<xpath expr="//form/header/button[@name='post_inventory']" position="attributes">-->
+                <!--<attribute name="invisible">1</attribute>-->
+            <!--</xpath>-->
+
+<!--            <field name="availability" position="after">-->
+<!--                <field name="qty_produced" readonly="1"/>-->
+<!--            </field>-->
+
+            <!--<xpath expr="/form/sheet/notebook/page/field[@name='move_raw_ids']/tree"-->
+                   <!--position="attributes">-->
+                <!--<attribute name="decoration-danger">state not in ('assigned', 'done')</attribute>-->
+            <!--</xpath>-->
+            <!--<xpath expr="/form/sheet/notebook/page[2]/field[@name='move_finished_ids']/tree/button[@name='split_move_lot']"-->
+                   <!--position="replace">-->
+                   <!--<button name="split_move_lot" string="Register lots" type="object" icon="fa-list"-->
+                                        <!--attrs="{'invisible': [('has_tracking', 'not in', ['lot','serial'])]}" context="{'flag':'True'}"/>-->
+            <!--</xpath>-->
+        </field>
+
+    </record>
+
+</odoo>

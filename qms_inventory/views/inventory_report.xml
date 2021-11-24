@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="inventory_report_tree" model="ir.ui.view">
+            <field name="name">product.template.inventory.tree</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <tree string="Product">
+                    <!--<field name="sequence" widget="handle"/>-->
+                    <field name="default_code"/>
+                    <field name="name"/>
+                    <field name="product_brand_id"/>
+                    <field name="list_price" string="MSP"/>
+                    <field name="l10n_in_hsn_code"/>
+                    <field name="qty_available"/>
+                    <field name="virtual_available"/>
+                    <button name="%(qms_inventory.action_location_quantity_template)d"
+                            string="View Inventory" type="action" class="btn-primary"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="inventory_report_tree_purchase" model="ir.ui.view">
+            <field name="name">product.product.inventory.tree</field>
+            <field name="model">product.product</field>
+            <field name="arch" type="xml">
+                <tree string="Product">
+                    <!--<field name="sequence" widget="handle"/>-->
+                    <field name="default_code"/>
+                    <field name="name"/>
+                    <field name="product_brand_id"/>
+                    <field name="l10n_in_hsn_code"/>
+                    <field name="standard_price"/>
+                    <field name="qty_available"/>
+                    <!--<field name="to_procure" string="Quantity to Procure"/>-->
+                    <button name="%(qms_inventory.action_location_quantity_template)d"
+                            string="View Sales Detail" type="action" class="btn-primary"
+                    />
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_template_action_inventory_report" model="ir.actions.act_window">
+            <field name="name">Products</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="inventory_report_tree"/>
+        </record>
+
+        <!--<record id="action_product_template_report_tree" model="ir.actions.act_window.view">-->
+            <!--<field eval="1" name="sequence"/>-->
+            <!--<field name="view_mode">tree</field>-->
+            <!--<field name="view_id" ref="inventory_report_tree"/>-->
+            <!--<field name="act_window_id" ref="product_template_action_inventory_report"/>-->
+        <!--</record>-->
+
+        <menuitem action="product_template_action_inventory_report" id="menu_inventory_report_sales"
+                  name="Inventory Report"
+        parent="sale.sale_menu_root" sequence="4"/>
+
+        <menuitem action="product_template_action_inventory_report" id="menu_inventory_report_crm"
+                  name="Inventory Report"
+        parent="crm.crm_menu_root" sequence="4"/>
+
+
+    </data>
+</odoo>

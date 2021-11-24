@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+       <record id="delivery_mail_template" model="mail.template">
+            <field name="name">Delivery</field>
+            <!--<field name="email_from">${object.env.user or ''}</field>-->
+            <field name="email_to">${object.sale_id.partner_id.email or ''}</field>
+            <field name="subject">Product Delivery Initiated for ${object.sale_id.name or ''}</field>
+           <!--<field name="partner_to">${object.sale_id.partner_id.id or '' and object.sale_id.user_id.partner_id.id or ''}</field>-->
+            <field name="model_id" ref="qms_stock_picking.model_stock_picking"/>
+            <!--<field name="report_name">${'Report'}</field>-->
+            <!--<field name="report_template" ref="gts_nidra_hotel_crm.confirm_line_report_view"/>-->
+                <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+
+<br/>
+        <p>Hi,</p>
+        <p>Delivery against sale order number ${object.sale_id.name or ''} has been initiated.</p>
+        <p></p>
+            <p style="color:#9E588B;">Powered by <a target="_blank" href="https://www.odoo.com">Odoo</a>.</p>
+
+   <br/>
+
+  Thanks & Regards, <br/>
+
+  <p></p>
+
+<br/>
+
+</p>
+
+</div>
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

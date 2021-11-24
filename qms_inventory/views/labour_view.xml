@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="labour_of_work_master_list_view" model="ir.ui.view">
+            <field name="name">Transportation Charges</field>
+            <field name="model">labour.name</field>
+            <field name="arch" type="xml">
+                <tree string="Charges" editable="bottom">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_labour_of_work_view" model="ir.actions.act_window">
+            <field name="name">Transportation Charges</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">labour.name</field>
+            <field name="view_mode">tree</field>
+        </record>
+    </data>
+</odoo>

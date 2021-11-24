@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_lead_view_form_view_inherit_link" model="ir.ui.view">
+            <field name="name">crm.lead.form.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref = 'crm.crm_case_form_view_oppor'/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_deadline']" position="after">
+                    <field name="lead_flow" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//sheet/div/button[@name='toggle_active']" position="after">
+                    <button class="oe_stat_button" type="action"
+                            name="%(qms_opportunity_link.action_invoice_crm)d" icon="fa-pencil-square-o"
+                            attrs="{'invisible': [('invoice_count', '&lt;', 1)]}">
+                        <div class="o_stat_info">
+                            <field name="invoice_count" class="o_stat_value"/>
+                            <span class="o_stat_text">Invoice(s)</span>
+                        </div>
+                    </button>
+
+                    <button class="oe_stat_button" type="action"
+                            name="%(qms_opportunity_link.action_picking_crm)d" icon="fa-pencil-square-o"
+                            attrs="{'invisible': [('picking_count', '&lt;', 1)]}">
+                        <div class="o_stat_info">
+                            <field name="picking_count" class="o_stat_value"/>
+                            <span class="o_stat_text">Deliveries(s)</span>
+                        </div>
+                    </button>
+
+                    <button class="oe_stat_button" type="action"
+                            name="%(qms_opportunity_link.action_move_crm)d" icon="fa-pencil-square-o"
+                            attrs="{'invisible': [('move_count', '&lt;', 1)]}">
+                        <div class="o_stat_info">
+                            <field name="move_count" class="o_stat_value"/>
+                            <span class="o_stat_text">Journal Entries</span>
+                        </div>
+                    </button>
+
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="crm_case_form_view_oppor_inherit_link" model="ir.ui.view">
+            <field name="name">crm.lead.oppor.inherited.crm</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="sale_crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="company_id" invisible="1"/>
+                </field>
+
+                <xpath expr="//button[@name='%(sale_crm.sale_action_quotations_new)d']" position="replace">
+                    <button string="New Quotation" name="%(sale_crm.sale_action_quotations_new)d"
+                            type="action" class="oe_highlight"
+                            context="{'search_default_partner_id': partner_id,
+                                  'default_partner_id': partner_id,
+                                  'default_team_id': team_id,
+                                  'default_user_id': user_id,
+                                  'default_campaign_id': campaign_id,
+                                  'default_medium_id': medium_id,
+                                  'default_source_id': source_id,
+                                  'default_lead_flow': lead_flow,
+                                  'default_company_id': company_id,
+                                  'default_sale_type': 'sale'}"/>
+                </xpath>
+
+                <xpath expr="//button[@name='%(sale_crm.sale_action_quotations)d']" position="replace">
+                    <button class="oe_stat_button" type="action"
+                            name="%(sale_crm.sale_action_quotations)d" icon="fa-pencil-square-o"
+                            context="{'default_partner_id': partner_id,
+                            'search_default_draft': 1, 'default_user_id': user_id,
+                            'default_lead_flow': lead_flow,
+                            'default_company_id': company_id,
+                            'default_sale_type': 'sale'}">
+                        <div class="o_stat_info">
+                            <field name="sale_number" class="o_stat_value"/>
+                            <span class="o_stat_text"> Quotation(s) </span>
+                        </div>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

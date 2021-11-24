@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+
+        <!--        Menu for indivudual-->
+
+    <menuitem id="individual_contacts"
+              name="Individual Contacts"
+              action="action_for_individual_contact"
+              parent="contacts.menu_contacts"
+              groups="base.group_system"
+              sequence="2"/>
+
+    <menuitem id="contacts.res_partner_menu_config"
+        name="Configuration"
+        parent="contacts.menu_contacts"
+        groups="base.group_system"
+        sequence="3"/>
+
+    <menuitem id="contacts.res_partner_menu_contacts"
+        name="Company"
+        action="action_company_contacts"
+        parent="contacts.menu_contacts"
+        sequence="2"/>
+
+
+
+    <menuitem id="contacts.menu_partner_category_form"
+        action="base.action_partner_category_form"
+        name="Contact Tags"
+        sequence="1" parent="contacts.res_partner_menu_config"/>
+
+    <menuitem
+            action="action_brand"
+            id="menu_brand" name="Brands"
+            parent="contacts.res_partner_menu_config" sequence="3"/>
+
+    <menuitem
+            action="action_division"
+            id="menu_div" name="Divisions"
+            parent="contacts.res_partner_menu_config" sequence="4"/>
+
+
+    </data>
+</odoo>

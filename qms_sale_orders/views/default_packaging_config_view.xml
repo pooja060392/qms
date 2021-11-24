@@ -1,0 +1,50 @@
+<odoo>
+    <data>
+        <!-- ===========form =================-->
+        <record id="view_config_pack_form" model="ir.ui.view">
+            <field name="name">package.config.form</field>
+            <field name="model">package.config</field>
+            <field name="arch" type="xml">
+                <form>
+                   <sheet>
+                       <group>
+                            <field name="name"/>
+                       </group>
+                       <field name="config_pack_line">
+                           <tree editable="bottom">
+                               <field name="product_id"/>
+                               <!--<field name="type"/>-->
+                               <!--<field name="size"/>-->
+                               <!--<field name="piece"/>-->
+                           </tree>
+                       </field>
+                   </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- ===========tree =================-->
+        <record id="view_config_tree" model="ir.ui.view">
+            <field name="name">package.config.tree</field>
+            <field name="model">package.config</field>
+            <field name="arch" type="xml">
+                <tree>
+                   <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_default_config" model="ir.actions.act_window">
+            <field name="name">Packaging Config</field>
+            <field name="res_model">package.config</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_config_tree"/>
+        </record>
+
+        <menuitem
+            action="action_default_config"
+            id="menu_pack_config"
+            name="Packaging Configuration"
+            parent="sale.prod_config_main" sequence="6"/>
+
+    </data>
+</odoo>

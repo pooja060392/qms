@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_packing_line,packing.line,model_packing_line,base.group_user,1,1,1,1
+access_package_config,package.config,model_package_config,base.group_user,1,1,1,0
+access_order_pack_product,order.pack.product,model_order_pack_product,base.group_user,1,1,1,1
+access_package_design,package.design,model_package_design,base.group_user,1,1,1,0
+access_design_packing_line,design.packing.line,model_design_packing_line,base.group_user,1,1,1,0
+access_design_package_sales,access_package_design,model_package_design,sales_team.group_sale_salesman,1,0,0,0
+access_stock_production_lot_line,access_stock_production_lot,stock.model_stock_production_lot,base.group_user,1,1,1,0
+access_days_fill_mo,access.days.fill.mo,model_days_fill_mo,base.group_user,1,1,1,0
+
+access_package_design_art_user,package.design,model_package_design,group_sale_design,1,1,0,0

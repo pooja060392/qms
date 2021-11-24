@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="group_product_create" model="res.groups">
+            <field name="name">Product creation</field>
+        </record>
+<!--        <record id="group_product_approval" model="res.groups">-->
+<!--            <field name="name">Product Approval</field>-->
+<!--        </record>-->
+        <record id="group_product_cost" model="res.groups">
+            <field name="name">Product Cost</field>
+        </record>
+        <record id="group_mrp_update" model="res.groups">
+            <field name="name">MRP UPDATE</field>
+        </record>
+    </data>
+</odoo>

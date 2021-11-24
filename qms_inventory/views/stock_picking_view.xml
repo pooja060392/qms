@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+        <record id="inherit_view_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <!--hide SCRAP Button-->
+                <xpath expr="//button[@name='button_scrap']" position="replace">
+                    <button invisible="1" name="button_scrap" type="object" string="Scrap"
+                            attrs="{'invisible': ['|', '|', '&amp;', ('picking_type_code', '!=', 'incoming'),
+                            ('state', 'in', ('draft', 'cancel', 'waiting')), '&amp;', ('picking_type_code', '=', 'incoming'),
+                            ('state', '!=', 'done'), ('is_locked', '=', False)]}"/>
+                </xpath>
+
+                <xpath expr="//div[@class='oe_chatter']" position="after">
+                    <sheet>
+                        <group string="Other Expense">
+                             <field name="labour_details_line" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="lab_id"/>
+                                        <field name="description"/>
+                                        <field name="rate"
+                                               force_save="1" widget='monetary'/>
+                                    </tree>
+                                </field>
+                        </group>
+                    </sheet>
+                </xpath>
+
+                <field name="origin" position="after">
+                    <field name="production_id" attrs="{'invisible': [('finalised_id', '=', False)]}"/>
+                    <field name="internal_transfer_mo_done" invisible="1"/>
+                    <field name="product_finalised"  invisible="1"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

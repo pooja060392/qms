@@ -1,0 +1,8 @@
+*~
+*.project
+*.pyc
+.idea
+*.pydevproject
+*.settings
+/Backup/
+/openerp/addons/database_cleanup/

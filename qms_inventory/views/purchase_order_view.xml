@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <menuitem id="menu_purchase_inventory" name="Inventory"
+            parent="purchase.menu_purchase_root"
+            sequence="3"/>
+
+        <menuitem action="qms_inventory.product_template_action_inventory_report" id="menu_inventory_report_purchase"
+                  name="Inventory Report"
+        parent="qms_inventory.menu_purchase_inventory" sequence="1"/>
+
+        <record id="product_purchase_required" model="ir.actions.server">
+            <field name="name">Purchase Required</field>
+            <field name="model_id" ref="product.model_product_product"/>
+            <field name="state">code</field>
+            <field name="code">action = model.open_products()</field>
+        </record>
+
+    <menuitem id="menu_purchase_product_required"
+              action="product_purchase_required"
+              parent="qms_inventory.menu_purchase_inventory" sequence="2"/>
+
+    </data>
+</odoo>

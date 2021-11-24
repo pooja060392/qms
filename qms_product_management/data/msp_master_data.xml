@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="msp_01" model="product.msp.master">
+          <field name="name">25.00</field>
+        </record>
+    </data>
+</odoo>

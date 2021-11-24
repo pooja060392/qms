@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="stock.menu_stock_config_settings" name="Configuration" parent="stock.menu_stock_root"
+        sequence="100" groups="base.user_root"/>
+    <menuitem id="stock.menu_warehouse_config" name="Warehouse Management" parent="stock.menu_stock_config_settings"
+              groups="base.user_root" sequence="1"/>
+    <menuitem action="stock.action_warehouse_form" id="stock.menu_action_warehouse_form"
+            parent="stock.menu_warehouse_config" groups="base.user_root" sequence="1"/>
+    <menuitem id="stock.menu_pickingtype" name="Operations Types" parent="stock.menu_warehouse_config"
+              action="stock.action_picking_type_list" groups="base.user_root" sequence="4"/>
+    <menuitem id="stock.menu_product_in_config_stock" name="Products" parent="stock.menu_stock_config_settings"
+              groups="base.user_root" sequence="4"/>
+
+
+    <report
+            id="stock_inventory_xlsx_test2"
+            model="stock.inventory"
+            string="Print to XLSX"
+            report_type="xlsx"
+            name="nuro_inventory_import.report_inventory_excel"
+            file="Inventory Items"
+            attachment_use="True"
+            attachment="(object.state in ('draft','sent')) and ('Inventory Items '+(object.name or '').replace('/','')+'.xls')"
+    />
+    <!--<report-->
+    <!--id="purchase_order_xlsx"-->
+    <!--model="purchase.order"-->
+    <!--string="RFQ Excel"-->
+    <!--report_type="xlsx"-->
+    <!--name="gts_rfq_excel.report_purchase_excel.xlsx"-->
+    <!--file="gts_rfq_excel.report_purchase_excel.xlsx"-->
+    <!--attachment_use="False"-->
+    <!--/>-->
+
+    <!--PURCHASE WIZARD-->
+    <record id="view_inventory_adjustment_excel_wizard" model="ir.ui.view">
+        <field name="name">Inventory Excel</field>
+        <field name="model">inventory.excel.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <group col="4">
+                    <field name="inventory_id" />
+                    <field name="company_id" />
+                </group>
+
+                <footer>
+                    <button name="print_xls_report" string="XLS" type="object" default_focus="1" class="oe_highlight" />
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_inventory_adjustment_excel_wizard" model="ir.actions.act_window">
+        <field name="name">Inventory EXCEL</field>
+        <field name="res_model">inventory.excel.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_inventory_adjustment_excel_wizard"/>
+        <field name="target">new</field>
+    </record>
+    <!--PURCHASE WIZARD-->
+
+
+    <!--PURCHASE WIZARD-->
+    <record id="view_inventory_stock_importation" model="ir.ui.view">
+        <field name="name">Picking Excel Import</field>
+        <field name="model">stock.inventory.importation</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <group col="4">
+                    <field name="upload_file" />
+                    <field name="file_name" />
+<!--                    <field name="file_name_details" widget="binary" readonly="1" filename="name"/>-->
+                </group>
+
+                <footer>
+                    <button name="import_xls_action" string="Import" type="object" default_focus="1" class="oe_highlight" />
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_inventory_excel_wizard" model="ir.actions.act_window">
+        <field name="name">Inventory EXCEL</field>
+        <field name="res_model">stock.inventory.importation</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_inventory_stock_importation"/>
+        <field name="target">new</field>
+    </record>
+    <!--PURCHASE WIZARD-->
+
+    <!--INHERIT PURCHASE FORM-->
+    <record id="stock_inventory_adjustment_form" model="ir.ui.view">
+        <field name="name">stock.inventory.form.inherit</field>
+        <field name="model">stock.inventory</field>
+        <field name="inherit_id" ref="stock.view_inventory_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form/header/field[@name='state']" position="before">
+                <button name="%(action_stock_inventory_excel_wizard)d" type="action" string="Inventory IMPORT"
+                        attrs="{'invisible':[('state','in',('draft','cancel','done'))]}" class="oe_highlight"/>
+            </xpath>
+            <xpath expr="//field[@name='accounting_date']" position="after">
+                <field name="file_name_details" widget="binary" readonly="1" filename="faulty_file_name"/>
+                <field name="faulty_file_name" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+    <!--INHERIT PURCHASE FORM-->
+
+</odoo>

@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+<!-- Wizard form view -->
+    <record id="view_import_gcrm" model="ir.ui.view">
+        <field name="name">import.gcrm.wiz</field>
+        <field name="model">import.gcrm</field>
+        <field name="arch" type="xml">
+        <form string="Users">
+            <sheet>
+                <group>
+                    <group>
+                        <field name="excel_file" required="1"/>
+                    </group>
+                </group>
+            </sheet>
+        <footer>
+            <button name="import_excel" string="Submit" type="object" class="btn-primary"/>
+            <button string="Cancel" class="btn-default" special="cancel" />
+        </footer>
+        </form>
+        </field>
+        </record>
+
+        <record id="action_import_gcrm" model="ir.actions.act_window">
+            <field name="name">Import File</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">import.gcrm</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

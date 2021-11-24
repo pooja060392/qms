@@ -1,0 +1,35 @@
+<odoo>
+    <data>
+        <record id="mrp_update_wizard_form" model="ir.ui.view">
+            <field name="name">mrp.update.wizard.form</field>
+            <field name="model">mrp.update.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="mrp_update"/>
+                        <field name="product_id" invisible="1"/>
+                    </group>
+                </group>
+                <footer>
+                        <button string="Update Price" type="object" name="update_product_mrp"
+                                class="oe_highlight"/>
+                         OR
+                            <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+
+            </field>
+        </record>
+
+        <record id="action_mrp_update_wizard" model="ir.actions.act_window">
+                <field name="name">MRP UPDATE</field>
+                <field name="res_model">mrp.update.wizard</field>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="mrp_update_wizard_form"/>
+                <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

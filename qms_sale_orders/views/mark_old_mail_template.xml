@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <record id="sale_mark_old_template" model="mail.template">
+            <field name="name">Mark as Old</field>
+            <field name="subject">Quotation ${object.name or ''}, set to 'Mark As Old'</field>
+            <field name="model_id" ref="qms_sale_orders.model_sale_order"/>
+            <field name="body_html"><![CDATA[
+            <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                <br/>
+                <p>Hi ,</p>
+                <p>Quotation ${object.name}, set to Mark As Old</p>
+                <p>The Quotation <b>${object.name}</b> is against a direct PO, so customization details are in notes.</p>
+                <br/>
+                <p>Please follow the below link.</p>
+                <p>
+                    <a href="_sale_url" style="background-color: #9E588B; margin-top: 5px; padding: 10px;
+                    text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;">Click Here</a>
+                </p>
+                <br/>
+                Thanks & Regards, <br/>
+                <br/>
+            </div>
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

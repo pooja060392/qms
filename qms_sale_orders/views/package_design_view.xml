@@ -1,0 +1,123 @@
+<odoo>
+    <data>
+        <!-- ===========form =================-->
+        <record id="design_package_form" model="ir.ui.view">
+            <field name="name">package.design.form</field>
+            <field name="model">package.design</field>
+            <field name="arch" type="xml">
+                <form create="false" delete="false">
+                    <header>
+<!--                        <button name="send_to_customer" string="Notify Salesperson" type="object"-->
+<!--                        attrs="{'invisible': [('state', 'not in', ('new'))]}"/>-->
+<!--                        <button name="customer_approve" string="Approved By Customer" type="object"-->
+<!--                        attrs="{'invisible': [('state', 'in', ('new','customer_approve','done','cancel'))]}"/>-->
+                        <button name="done" string="Done" type="object" attrs="{'invisible': [('state', 'in', ('new','design_submit','done','cancel'))]}"/>
+                        <button name="cancel" string="Cancel" type="object" attrs="{'invisible': [('state', 'in', ('cancel','done'))]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="new,design_submit,done"/>
+                    </header>
+                   <sheet>
+                       <group colspan="4" col="4">
+<!--                           <field name="sale_id" readonly="1" force_save="1" groups="sales_team.group_sale_salesman,sales_team.group_sale_manager"/>-->
+<!--                           <field name="attachment_ids" attrs="{'readonly': [('state', 'in', ('cancel','done','customer_approve'))]}" widget="many2many_binary" force_save="1"/>-->
+<!--                           <field name="artwork_deadline" attrs="{'readonly': [('state', 'in', ('cancel','done','customer_approve'))]}"/>-->
+                       </group>
+                       <group string="Packing Lines">
+                       <field name="design_packing_line" nolabel="1" readonly="1">
+                       <!--<field name="design_packing_line" nolabel="1" attrs="{'readonly': [('state', 'in', ('cancel','done','customer_approve'))]}">-->
+                           <tree editable="bottom">
+                               <field name="product_id"/>
+                               <field name="description"/>
+                               <field name="quantity"/>
+                               <field name="type"/>
+                               <field name="size"/>
+                               <field name="price"/>
+                               <field name="total"/>
+                           </tree>
+                       </field>
+                       </group>
+                   </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <!-- ===========tree =================-->
+        <record id="design_packing_tree" model="ir.ui.view">
+            <field name="name">package.design.tree</field>
+            <field name="model">package.design</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete="false">
+                   <field name="sale_id"/>
+                    <field name="state"/>
+                    <field name="create_uid" string="Created By"/>
+                    <field name="datetime"/>
+                    <field name="artwork_deadline"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--==========================search=============================-->
+
+
+
+        <record id="action_design" model="ir.actions.act_window">
+            <field name="name">Design Packing</field>
+            <field name="res_model">package.design</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','not in',('done','cancel'))]</field>
+            <field name="view_id" ref="design_packing_tree"/>
+        </record>
+
+        <menuitem
+            id="base_menu_design" name="Designing"
+            web_icon="qms_sale_orders,static/description/design.png"
+            sequence="5"
+            groups="qms_sale_orders.group_design_packing,qms_sale_orders.group_sale_design"/>
+         <menuitem
+            action="action_design"
+            id="menu_design" name="Designing"
+            parent="base_menu_design" sequence="0"/>
+        <!--======================done packaging================================-->
+
+
+         <record id="action_done_packaging" model="ir.actions.act_window">
+            <field name="name">Design Packing</field>
+            <field name="res_model">package.design</field>
+             <field name="domain">[('state','=','done')]</field>
+            <field name="context">{'create': False}</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="sample_tree_view"/>
+        </record>
+
+
+        <record id="tree_done_design" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="design_packing_tree"/>
+            <field name="act_window_id" ref="action_done_packaging"/>
+        </record>
+
+        <record id="form_done_design" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="design_package_form"/>
+            <field name="act_window_id" ref="action_done_packaging"/>
+        </record>
+
+        <menuitem
+            action="action_done_packaging"
+            id="menu_done_design"
+            name="Done Designing"
+            parent="base_menu_design" sequence="1"/>
+        <!--==========================cancel design====================================-->
+
+
+
+
+
+
+    </data>
+</odoo>

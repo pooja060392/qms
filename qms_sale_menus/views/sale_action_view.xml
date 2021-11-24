@@ -1,0 +1,78 @@
+<odoo>
+    <data>
+        <!--Sale Request ACtions-->
+
+        <record id="action_sale_request_quotation" model="ir.actions.act_window">
+            <field name="name">Quotation</field>
+            <field name="res_model">sale.order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('state', '!=', 'sale'), ('sale_type', '=', 'sale')]</field>
+            <field name="context">{'default_sale_type': 'sale'}</field>
+        </record>
+
+        <record id="action_sale_request_quotation_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="sale.view_quotation_tree"/>
+            <field name="act_window_id" ref="qms_sale_menus.action_sale_request_quotation"/>
+        </record>
+
+        <record id="action_sale_request_quotation_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="sale.view_order_form"/>
+            <field name="act_window_id" ref="qms_sale_menus.action_sale_request_quotation"/>
+        </record>
+
+         <record id="action_sample_request" model="ir.actions.act_window">
+            <field name="name">Sample</field>
+            <field name="res_model">sale.order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('state', '!=', 'sale'), ('sale_type', '=', 'sample_gift')]</field>
+            <field name="context">{'default_sale_type': 'sample_gift'}</field>
+        </record>
+
+
+
+        <record id="action_sample_request_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="qms_sale_orders.sample_tree_view"/>
+            <field name="act_window_id" ref="qms_sale_menus.action_sample_request"/>
+        </record>
+
+        <record id="action_sample_request_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="qms_sale_orders.sample_sale_order_form_view"/>
+            <field name="act_window_id" ref="qms_sale_menus.action_sample_request"/>
+        </record>
+
+        <record id="action_gift_request" model="ir.actions.act_window">
+            <field name="name">Gift</field>
+            <field name="res_model">sale.order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('state', '!=', 'sale'), ('sale_type', '=', 'gift')]</field>
+            <field name="context">{'default_sale_type': 'gift'}</field>
+        </record>
+
+        <record id="action_gift_request_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="qms_sale_orders.gift_tree_view"/>
+            <field name="act_window_id" ref="qms_sale_menus.action_gift_request"/>
+        </record>
+
+        <record id="action_gift_request_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="qms_sale_orders.gift_sale_order_form_view"/>
+            <field name="act_window_id" ref="qms_sale_menus.action_gift_request"/>
+        </record>
+
+
+    </data>
+</odoo>

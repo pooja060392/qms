@@ -1,0 +1,34 @@
+<odoo>
+	<data>
+        <record id="sample_form_view" model="ir.ui.view">
+            <field name="name">sample.wizard.view</field>
+            <field name="model">sample.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Grade Report">
+                    <group>
+                        <field name="from_date" required="1"/>
+                        <field name="to_date" required="1"/>
+                    </group>
+                    <footer>
+                        <button string="Print" name='print_sample_excel' class="oe_highlight" type='object' />
+                        <button string="Close" class="oe_highlight" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_sample_report" model="ir.actions.act_window">
+            <field name="name">Sample Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sample.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_id" ref="sample_form_view" />
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name='Sample Excel Report' parent="sale.menu_sale_report" sequence="5"
+            action='action_sample_report' id='menu_sample_wizard'/>
+    </data>
+</odoo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--WIZARD-->
+
+    <record id="view_location_quantity" model="ir.ui.view">
+        <field name="name">location.quantity.wizard</field>
+        <field name="model">location.quantity.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Location Wise Inventory">
+                <field name="location_quantity" />
+                <footer>
+                    <button string="Close" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_location_quantity" model="ir.actions.act_window">
+        <field name="name">Location Wise Quantities</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">location.quantity.wizard</field>
+<!--        <field name="view_type">form</field>-->
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

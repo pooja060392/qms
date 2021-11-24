@@ -1,0 +1,99 @@
+<odoo>
+    <data>
+        <record id="inherit_stock_picking_form45678" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <!--<button name="%(stock.act_stock_return_picking)d" position="replace">-->
+                    <!--<button name="%(stock.act_stock_return_picking)d" string="Return" attrs="{'invisible': ['|', ('state', '!=', 'done'), ('is_locked', '=', False), ('sample_return', '=', True)]}"-->
+                            <!--type="action" groups="base.group_user"/>-->
+                <!--</button>-->
+                <field name="location_dest_id" position="before">
+                    <field name="user_id" atts="{'invisible':[('sale_id','=',False)]}"/>
+                </field>
+                <field name="origin" position="after">
+                    <field name="delivery_date" readonly="1" attrs="{'invisible': [('sale_type', '!=', 'sale')]}"/>
+                    <field name="sale_type" readonly="1" force_save="1" invisible="1" attrs="{'invisible': [('related_code', 'not in', ('outgoing'))]}"/>
+                    <field name="attachment_ids" widget="many2many_binary" attrs="{'invisible': [('related_code', 'not in', ('outgoing'))]}"/>
+                    <field name="no_of_cartoon" attrs="{'invisible': [('related_code', 'not in', ('incoming'))]}"/>
+                    <field name="shipping_tracking_number" attrs="{'invisible': [('related_code', 'not in', ('incoming'))]}"/>
+                    <field name="check_shiping_tracking" attrs="{'invisible': [('related_code', 'not in', ('incoming'))]}"/>
+                    <field name="shiping_tracking_status" attrs="{'invisible': [('related_code', 'not in', ('incoming'))]}"/>
+                    <field name="sample_return" invisible="1"/>
+                    <field name="display_return" invisible="1"/>
+                    <field name="amount_returned" invisible="1"/>
+                    <field name="related_code" invisible="1"/>
+                    <field name="qc_transfer" invisible="1"/>
+                    <field name="is_returned" invisible="1"/>
+                    <field name="address_attachment" filename="file_name" force_save="1" attrs="{'invisible': [('sale_type', '!=', 'gcrm')]}"/>
+                    <field name="invoice_attachment" filename="file_name_address" readonly="1" force_save="1" attrs="{'invisible': [('sale_type', '!=', 'gcrm')]}"/>
+                    <field name="file_name" invisible="1"/>
+                    <field name="file_name_address" invisible="1"/>
+                    <field name="return_picking_id" invisible="1"/>
+                </field>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Courier &amp; Invoice Details" attrs="{'invisible': [('sale_type', '!=', 'gcrm')]}">
+                        <group colspan="4" col="4">
+                            <field name="courier_no"/>
+                            <field name="courier_name"/>
+                            <field name="inv_date"/>
+                            <field name="inv_number"/>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//page[3]" position="after">
+                    <page string="Remarks" attrs="{'invisible': [('related_code', 'not in', ('internal','incoming'))]}">
+                        <group>
+                            <field name="remarks"/>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='move_ids_without_package']//tree//field[@name='product_uom_qty']" position="after">
+                    <field name="related_code" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='location_id']" position="attributes">
+                    <attribute name="options">{'no_edit': True, 'no_create': True, 'no_open': True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='move_ids_without_package']//tree//field[@name='product_uom_qty']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('related_code', 'in', ('outgoing','incoming'))]}</attribute>
+                </xpath>
+                <!--<xpath expr="//notebook/page[1]" position="attributes">-->
+                    <!--<attribute name="attrs">{}</attribute>-->
+                <!--</xpath>-->
+                <xpath expr="//field[@name='picking_type_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'in', ('done', 'cancel'))]}</attribute>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Transport Details" attrs="{'invisible': [('sale_type', '!=', 'sale')]}">
+                        <button string="Send Intimation" name="send_intimation" type="object" class="oe_highlight"
+                            attrs="{'invisible': [('state', '=', 'done')]}"/>
+                        <group colspan="4" col="4">
+                            <field name="tracking_number"/>
+                            <field name="transport_num"/>
+                            <field name="vehicle_no"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id="action_for_do_calender_view" model="ir.actions.act_window">
+            <field name="name">DO Calender</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <!--<field name="view_type">tree,form,calender</field>-->
+            <field name="view_mode">calendar,tree,form</field>
+            <field name="domain">[('related_code', '=', 'outgoing')]</field>
+            <field name="context">{
+                    'contact_display': 'partner_address',
+            }
+            </field>
+            <field name="view_id" ref="stock.stock_picking_calendar"/>
+        </record>
+
+        <menuitem id="do_calender" name="Delivery Orders Calender" parent="stock.menu_stock_warehouse_mgmt" sequence="5" action="action_for_do_calender_view" groups="stock.group_stock_manager,stock.group_stock_user"/>
+
+
+    </data>
+</odoo>

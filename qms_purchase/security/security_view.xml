@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="group_packaging_po" model="res.groups">
+            <field name="name">Packaging PO Approval</field>
+            <field name="implied_ids" eval="[(4, ref('purchase.group_purchase_manager')), (4, ref('sales_team.group_sale_manager'))]"/>
+        </record>
+         <record id="group_packaging_po_menu" model="res.groups">
+            <field name="name">Packaging PO Menu</field>
+            <field name="implied_ids" eval="[(4, ref('purchase.group_purchase_manager')), (4, ref('sales_team.group_sale_manager'))]"/>
+        </record>
+        <record id="group_packaging_po_create" model="res.groups">
+            <field name="name">Packaging PO Creation</field>
+            <field name="implied_ids" eval="[(4, ref('purchase.group_purchase_manager')), (4, ref('sales_team.group_sale_manager'))]"/>
+        </record>
+    </data>
+</odoo>

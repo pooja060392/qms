@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+<!-- Wizard form view -->
+    <record id="view_product_approval_form" model="ir.ui.view">
+        <field name="name">send.approval</field>
+        <field name="model">send.approval</field>
+        <field name="arch" type="xml">
+        <form string="Users">
+            <sheet>
+                <group>
+                    <group>
+                        <field name="user_id" required="1" options="{'no_create': True, 'no_open': True}" domain="[('is_product_approved','=',True)]"/>
+                        <field name="product_id" invisible="1"/>
+                    </group>
+                </group>
+            </sheet>
+        <footer>
+            <button name="submit_button" string="Submit" type="object" class="btn-primary"/>
+            <button string="Cancel" class="btn-default" special="cancel" />
+        </footer>
+        </form>
+        </field>
+        </record>
+
+        <record id="action_product_approval_wizard" model="ir.actions.act_window">
+            <field name="name">Product Send For Approval</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">send.approval</field>
+<!--            <field name="view_mode">form</field>-->
+            <field name="target">new</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

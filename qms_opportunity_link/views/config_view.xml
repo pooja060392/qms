@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="action_invoice_crm" model="ir.actions.act_window">
+            <field name="name">Invoice(s)</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="domain">[('lead_id', '=', active_id)]</field>
+            <field name="context">{'search_default_lead_id': [active_id],
+                'default_lead_id': active_id, 'create': False}</field>
+        </record>
+
+        <record id="action_picking_crm" model="ir.actions.act_window">
+            <field name="name">Delivery</field>
+            <field name="res_model">stock.picking</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="domain">[('lead_id', '=', active_id)]</field>
+            <field name="context">{'search_default_lead_id': [active_id],
+                'default_lead_id': active_id, 'create': False}</field>
+        </record>
+
+        <record id="action_move_crm" model="ir.actions.act_window">
+            <field name="name">Account Moves</field>
+            <field name="res_model">account.move</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="domain">[('lead_id', '=', active_id)]</field>
+            <field name="context">{'search_default_lead_id': [active_id],
+                'default_lead_id': active_id, 'create': False}</field>
+        </record>
+    </data>
+</odoo>

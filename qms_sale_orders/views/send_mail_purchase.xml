@@ -1,0 +1,121 @@
+<odoo>
+    <data>
+       <record id="notification_mail_send_purchase" model="mail.template">
+            <field name="name">Notification mail</field>
+            <field name="email_from">${object.order_id.partner_id.email or ''}</field>
+            <field name="email_to">${object.user_id.partner_id.email or ''}</field>
+            <field name="subject">Products needed to be procured</field>
+            <field name="model_id" ref="qms_sale_orders.model_sale_order"/>
+                <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+
+<br/>
+        <p>Hi,</p>
+        <p>Following products have to be purchased against sale order number ${object.name or ''}</p>
+        <p>
+            </br>
+            </br>
+
+            <table border="1" cellspacing="1" cellpadding="4"  class="table table-striped">
+
+            <thead>
+            <tr>
+            <th><center><h5>Product Name</h5></center></th>
+            <th><center><h5>Ordered Qty</h5></center></th>
+            <th><center><h5>Forecosted Qty</h5><center></th>
+            <th><center><h5>To Procure Qty</h5><center></th>
+            </tr>
+            </thead>
+
+
+            % for line in object.order_line:
+            % if line.is_kit == False
+            % if line.virtual_available < line.product_uom_qty or line.virtual_available < 0.0
+                <tbody>
+                <td>${line.product_id.name or ''}</td>
+                <td>${line.product_uom_qty or 0}</td>
+                <td>${line.virtual_available or 0}</td>
+                % if line.virtual_available < 0.0
+                    <td>${line.product_uom_qty}</td>
+                % endif
+                % if line.virtual_available >= 0.0
+                % if line.virtual_available < line.product_uom_qty
+                    <td>${abs(line.virtual_available - line.product_uom_qty)}</td>
+                % endif
+                % endif
+             </tbody>
+             % endif
+            % endif
+            % endfor
+
+
+            </table>
+
+        </p>
+
+
+
+
+        % if object.kit_product_line:
+
+        <p> Kit Contains
+
+            <table border="1" cellspacing="1" cellpadding="4"  class="table table-striped">
+            <thead>
+            <tr>
+            <th><center><h5>Product Name</h5></center></th>
+            <th><center><h5>Ordered Qty</h5></center></th>
+            <th><center><h5>Forecosted Qty</h5><center></th>
+            <th><center><h5>To Procure Qty</h5><center></th>
+            </tr>
+            </thead>
+
+
+            % for line in object.kit_product_line:
+        % if line.product_available_qty < 0.0 or line.product_available_qty < line.qty
+        <tbody>
+                <td>${line.product_id.name or ''}</td>
+                <td>${line.qty}</td>
+                <td>${line.product_available_qty}</td>
+                % if line.product_available_qty < 0.0
+                    <td>${line.qty}</td>
+                % endif
+                % if line.product_available_qty >= 0.0
+                % if line.qty < 0.0
+                    <td>${abs(line.product_available_qty - line.qty)}</td>
+                % endif
+                % endif
+           </tbody>
+         %endif
+        % endfor
+
+
+            </table>
+
+        </p>
+
+        %endif
+            <!--<p>Please follow the below link.</p>-->
+                <!--<p>-->
+                <!--<a href="sale_notification_url" style="background-color: #9E588B; margin-top: 5px; padding: 10px;-->
+                <!--text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;">Click Here</a>-->
+                <!--</p>-->
+
+            <p style="color:#9E588B;">Powered by <a target="_blank" href="https://www.odoo.com">Odoo</a>.</p>
+
+   <br/>
+
+  Thanks & Regards, <br/>
+
+  <p></p>
+
+<br/>
+
+</p>
+
+</div>
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

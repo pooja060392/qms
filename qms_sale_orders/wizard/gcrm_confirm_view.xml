@@ -1,0 +1,57 @@
+<odoo>
+	<data>
+        <record id="gcrm_confirm_wiz12" model="ir.ui.view">
+            <field name="name">confirm.gcrm.view</field>
+            <field name="model">confirm.gcrm.order</field>
+            <field name="arch" type="xml">
+                <form string="Grade Report">
+                    <group colspan="17" col="4">
+                        <field name="courier_no"/>
+                        <field name="courier_name"/>
+                        <field name="inv_date"/>
+                        <field name="inv_number"/>
+                        <field name="book_no"/>
+                        <field name="exporters_ref"/>
+                        <field name="buyer_order_no"/>
+                        <field name="pre_carriage_by"/>
+                        <field name="place_of_receipt"/>
+                        <field name="vessel_flight_no"/>
+                        <field name="port_of_loading"/>
+                        <field name="port_of_dise"/>
+                        <field name="final_destn"/>
+                        <field name="terms_of_payments"/>
+                        <field name="marks_no"/>
+                        <field name="kind_of_pkgs"/>
+                        <field name="des_of_goods"/>
+                        <field name="container_no"/>
+                        <field name="origin"/>
+                        <field name="destination"/>
+                        <field name="submitted_to"/>
+                        <field name="submitted_date"/>
+                    </group>
+                    <footer>
+                        <button string="Confirm" name='gcrm_order_confirm' class="oe_highlight" type='object' />
+                        <button string="Cancel" class="oe_highlight" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <!--<record id="action_gcrm_order_confirm" model="ir.actions.act_window">-->
+            <!--<field name="name">Order Confirm</field>-->
+            <!--<field name="type">ir.actions.act_window</field>-->
+            <!--<field name="res_model">confirm.gcrm</field>-->
+            <!--<field name="view_type">form</field>-->
+            <!--<field name="view_mode">form</field>-->
+            <!--<field name="domain">[]</field>-->
+            <!--<field name="context">{}</field>-->
+            <!--<field name="view_id" ref="gcrm_confirm_wiz_view" />-->
+            <!--<field name="target">new</field>-->
+        <!--</record>-->
+        <act_window id="gcrm_confirm_wiz_action"
+            multi="True"
+            key2="client_action_multi" name="Confirm GCRM Orders"
+            res_model="confirm.gcrm.order" src_model="sale.order"
+            view_mode="form" target="new"/>
+
+    </data>
+</odoo>

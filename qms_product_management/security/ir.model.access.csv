@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_product_template_user_operation,access_product_template,product.model_product_template,qms_product_management.group_product_create,1,1,1,0
+access_product_product_user_operation,access_product_product,product.model_product_product,qms_product_management.group_product_create,1,1,1,0
+access_product_msp_master,product.msp.master,model_product_msp_master,base.group_no_one,1,1,1,1

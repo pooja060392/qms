@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <record id="view_from_old_order_warning" model="ir.ui.view">
+            <field name="name">old.order.warning</field>
+            <field name="model">old.order.warning</field>
+            <field name="arch" type="xml">
+                <form string="Reject">
+                    <div>
+                        <p>Lines of Customization Products with all the Data will be removed from this order.</p>
+                        <p>Are you sure to keep this as old order?</p>
+                    </div>
+                    <footer>
+                        <button name="make_changes" string="OK" class="oe_highlight" type="object"/>
+                        <button string="Cancel" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_old_order_warning_wiz" model="ir.actions.act_window">
+            <field name="name">Revert Customisation Process</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">old.order.warning</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

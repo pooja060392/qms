@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="inherit_view_purchase_requisition_form" model="ir.ui.view">
+            <field name="name">purchase.requisition.form</field>
+            <field name="model">purchase.requisition</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+                <field name="vendor_id" position="after">
+                    <field name="opportunity_id" readonly="1" attrs="{'invisible': [('opportunity_id', '=', False)]}"/>
+                    <field name="sale_order_id" readonly="1" attrs="{'invisible': [('opportunity_id', '=', False)]}"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

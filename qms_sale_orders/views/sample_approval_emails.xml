@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="email_template_send_sample_for_approval" model="mail.template">
+            <field name="name">Sample Approval Required</field>
+            <field name="model_id" ref="model_sample_approval_wizard"/>
+            <field name="subject">Approval Required for ${object.sale_id.name} </field>
+            <field name="auto_delete" eval="False" />
+            <field name="body_html"><![CDATA[
+            <p>Dear ${object.user_id.name},</p>
+            <p>Approval is required for <strong>${object.sale_id.name}</strong>,
+            please follow the link to approve. </p>
+            <p>
+                <a href="_sale_url" style="background-color: #9E588B; margin-top: 5px; padding: 10px;
+                text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;">Approve/Reject Sample</a>
+            </p><br/>
+            <p>Thank You</p>
+            ]]>
+            </field>
+        </record>
+
+        <record id="email_template_sample_rejection" model="mail.template">
+            <field name="name">Sample Rejection</field>
+            <field name="model_id" ref="model_sample_rejection_reason"/>
+            <field name="subject">${object.sale_id.name} Rejected</field>
+            <field name="auto_delete" eval="False" />
+            <field name="body_html"><![CDATA[
+            <p>Dear ${object.sale_id.user_id.name},</p>
+            <p><strong>${object.sale_id.name}</strong> has been rejected due to the following reason.</p></br>
+            <p><b>Rejection Reason: </b>${object.reason_of_rejection}</p>
+            <p>
+                <a href="_sale_url" style="background-color: #9E588B; margin-top: 5px; padding: 10px;
+                text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;">View Sample</a>
+            </p><br/>
+            <p>Thank You</p>
+            ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

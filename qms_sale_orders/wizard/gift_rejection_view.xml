@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <record id="view_form_reject_gift_new" model="ir.ui.view">
+            <field name="name">gift.rejection.reason</field>
+            <field name="model">gift.rejection.reason</field>
+            <field name="arch" type="xml">
+                <form string="Rejection Reason">
+                    <group>
+                        <field name="reason_of_rejection" required="1"/>
+                    </group>
+                    <footer>
+                        <button name="reject_gift" string="Reject" class="oe_highlight" type="object"/>
+                        <button string="Cancel" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_reject_gift_new" model="ir.actions.act_window">
+            <field name="name">Rejection Reason</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">gift.rejection.reason</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

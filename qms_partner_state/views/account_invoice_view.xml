@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="invoice_supplier_form_inherit_gts" model="ir.ui.view">
+        <field name="name">account.invoice.supplier.form.inherit</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="attributes">
+                <attribute name="domain">[('supplier','=',True),('partner_state','=','approved')]</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

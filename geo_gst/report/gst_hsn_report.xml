@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<report
+			id="gstr_hsn_report"
+			model="account.move"
+			string="GSTR-HSN"
+			report_type="qweb-pdf"
+			name="account.gstr.hsn.xlsx"
+			file="account.gstr.hsn.xlsx"
+			attachment_use="False"
+		    menu="False"
+		/>
+	</data>
+</odoo>

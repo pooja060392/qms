@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_production_picking_to_process" model="ir.actions.act_window">
+        <field name="name">Internal Transfer</field>
+        <field name="res_model">stock.picking</field>
+        <field name="domain">[('internal_transfer_mo_done', '=', True)]</field>
+        <field name="context">{'create': False}</field>
+    </record>
+
+    <record id="action_production_picking_final" model="ir.actions.act_window">
+        <field name="name">Internal Transfer</field>
+        <field name="res_model">stock.picking</field>
+        <field name="domain">[('product_finalised', '=', True)]</field>
+        <field name="context">{'create': False}</field>
+    </record>
+
+    <record id="mrp_production_form_view_inherit" model="ir.ui.view">
+        <field name="name">mrp.production.form</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <field name="bom_id" position="after">
+                <field name="internal_transfer_mo"
+                       readonly="1" attrs="{'invisible': [('internal_transfer_mo', '=', False)]}"/>
+            </field>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <!--NEHA: Update Context -->
+                <button name="%(qms_inventory.action_production_picking_final)d" type="action"
+                        class="oe_stat_button" context="{'search_default_name':name}"
+                    icon="fa-pencil-square-o" attrs="{'invisible': [('finished_transfer_count', '&lt;', 1)]}">
+                    <field name="finished_transfer_count" widget="statinfo" string="Finished Transfers"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+     <menuitem id="menu_mrp_manufacturing_transfers"
+            name="Internal Transfers"
+            parent="mrp.menu_mrp_root"
+            sequence="21"/>
+
+    <menuitem id="menu_process_transfer_manufacturing"
+              action="qms_inventory.action_production_picking_to_process"
+            name="Stock to Manufacturing"
+            parent="qms_inventory.menu_mrp_manufacturing_transfers"
+            sequence="1"/>
+
+    <menuitem id="menu_final_transfer_manufacturing"
+              action="qms_inventory.action_production_picking_final"
+            name="Production to Stock"
+            parent="qms_inventory.menu_mrp_manufacturing_transfers"
+            sequence="2"/>
+
+</odoo>

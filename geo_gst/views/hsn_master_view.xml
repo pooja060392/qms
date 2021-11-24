@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hsn_master_form_view_id" model="ir.ui.view">
+            <field name="name">hsn.master.form</field>
+            <field name="model">hsn.master</field>
+            <field name="arch" type="xml">
+                <form class="oe_form_configuration">
+                    <group name="hsn_details">
+                        <field name="name"/>
+                        <field name="product_category"/>
+                        <field name="description"/>
+                        <field name="company_id"/>
+                    </group>
+                    <group>
+                        <group>
+                        <field name="cgst_sale"/>
+                        <field name="sgst_sale"/>
+                        </group>
+                        <group>
+                            <field name="igst_sale"/>
+                        </group>
+
+                    </group>
+                     <group>
+                        <group>
+                            <field name="cgst_purchase"/>
+                            <field name="sgst_purchase"/>
+                        </group>
+                        <group>
+                            <field name="igst_purchase"/>
+                        </group>
+
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="hsn_master_tree_view" model="ir.ui.view">
+            <field name="name">hsn.master.tree</field>
+            <field name="model">hsn.master</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_hsn_master_action_form" model="ir.actions.act_window">
+            <field name="name">HSN Configuration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hsn.master</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_id" ref="hsn_master_tree_view"/>
+        </record>
+
+        <menuitem action="action_hsn_master_action_form" id="menu_hsn_master_action_form" parent="sale.prod_config_main" sequence="2"/>
+
+
+    </data>
+</odoo>

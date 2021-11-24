@@ -1,0 +1,107 @@
+<odoo>
+    <data>
+        <!--NEHA Group : Product Procurement User-->
+        <record id="group_product_procurement_team" model="res.groups">
+            <field name="name">Product Procurement Team</field>
+            <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+        </record>
+
+        <!--Group : Artwork/ Design User-->
+        <record id="group_sale_design" model="res.groups">
+            <field name="name">Artwork/Design User</field>
+            <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+        </record>
+
+        <!--Group : Orders(sample/gift/display) Confirmation Users -->
+        <record id="group_order_confirmation_user" model="res.groups">
+            <field name="name">Order Confirmation User</field>
+            <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+        </record>
+
+        <record id="group_sample_approved" model="res.groups">
+            <field name="name">Sale Sample Approval: NO USE</field>
+            <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_manager')), (4, ref('sales_team.group_sale_salesman'))]"/>
+        </record>
+        <record id="group_marketing_coordinator" model="res.groups">
+            <field name="name">Marketing Coordinator</field>
+            <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_manager')), (4, ref('sales_team.group_sale_salesman')), (4, ref('stock.group_stock_manager'))]"/>
+        </record>
+        <record id="group_design_packing" model="res.groups">
+            <field name="name">Packaging &amp; Designing</field>
+            <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_manager'))]"/>
+        </record>
+        <record id="group_gcrm" model="res.groups">
+            <field name="name">GCRM</field>
+            <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+        </record>
+        <record model="ir.rule" id="packinging_line_comp_rule">
+            <field name="name">Sale order Packing Line  multi-company</field>
+            <field name="model_id" ref="model_packing_line"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <record model="ir.rule" id="design_packing_linee_comp_rule">
+            <field name="name">Design Packing Line multi-company</field>
+            <field name="model_id" ref="model_design_packing_line"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <record model="ir.rule" id="package_design_comp_rule">
+            <field name="name">Design packaging  multi-company</field>
+            <field name="model_id" ref="model_package_design"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <record id="account.tax_comp_rule" model="ir.rule">
+            <field name="name">Tax multi-company</field>
+            <field name="model_id" ref="account.model_account_tax"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','!=', False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <record model="ir.rule" id="kit_contains_comp_rule">
+            <field name="name">Kit Contains multi-company</field>
+            <field name="model_id" ref="model_order_pack_product"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <record id="crm_rule_own_salesteam" model="ir.rule">
+            <field name="name">Own Salesteam</field>
+            <field ref="sales_team.model_crm_team" name="model_id"/>
+            <field name="domain_force">['|',('member_ids', 'in', user.id),('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+        </record>
+
+        <record id="crm_rule_all_salesteam" model="ir.rule">
+            <field name="name">All Salesteam</field>
+            <field ref="sales_team.model_crm_team" name="model_id"/>
+            <field name="domain_force">['|',('member_ids', 'in', user.id),('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('sales_team.group_sale_manager'))]"/>
+        </record>
+
+        <record id="group_top_management" model="res.groups">
+            <field name="name">Top Management</field>
+        </record>
+
+        <record id="group_purchase_team_packaging" model="res.groups">
+            <field name="name">Purchase/Packaging Team</field>
+        </record>
+
+        <record id="group_sales_team_packaging" model="res.groups">
+            <field name="name">Sales Team</field>
+        </record>
+
+        <record id="group_gift_approval" model="res.groups">
+            <field name="name">Gift Approval</field>
+        </record>
+
+        <record id="group_sample_approval" model="res.groups">
+            <field name="name">Sample Approval</field>
+        </record>
+
+    </data>
+</odoo>

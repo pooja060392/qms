@@ -1,0 +1,420 @@
+<odoo>
+    <data>
+
+<!--        <menuitem id="product_approval_main_menu" name="Product Approval" parent="stock.menu_stock_root" sequence="4"/>-->
+        <record id="inherit_product_template_form" model="ir.ui.view">
+            <field name="name">product.template.form</field>
+            <field name="model">product.template</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header" position="inside">
+                    <!--NEHA: Check Functionality-->
+                    <button type="object" name="get_mrp_price"  string="MRP UPDATE" invisible="1"/>
+                </xpath>
+                <field name="barcode" position="after">
+                    <field name="is_kit" string="Kit Product"/>
+                </field>
+                <field name="uom_po_id" position="after">
+                    <field name="packaging_product"/>
+                </field>
+                <field name="barcode" position="after">
+                    <field name="stock_code"/>
+                    <field name="sku_number"/>
+                </field>
+                <field name="company_id" position="before">
+                    <field name="mrp" force_save="1"/>
+                    <!--<field name="pro_lot_ids"/>-->
+                </field>
+                <field name="list_price" position="attributes">
+                    <attribute name="string">MSP</attribute>
+                </field>
+                <!--NEHA: Update MSP in View -->
+                <field name="list_price" position="after">
+                    <field name="list_price_new" readonly="1" invisible="1"/>
+                </field>
+                <field name="standard_price" position="attributes">
+                    <attribute name="groups">qms_product_management.group_product_cost</attribute>
+                    <attribute name="attrs">{'invisible': [('active', '!=', True)]}</attribute>
+                </field>
+                <label for="standard_price" position="attributes">
+                    <attribute name="groups">sales_team.group_sale_manager</attribute>
+                    <attribute name="attrs">{'invisible': [('active', '!=', True)]}</attribute>
+                </label>
+                <div name="standard_price_uom" position="after">
+                    <label for="standard_price2" groups="sales_team.group_sale_manager"
+                           attrs="{'invisible': ['|', ('active', '=', True), ('product_variant_count', '&gt;', 1)]}"/>
+                    <div name="standard_price_uom" groups="sales_team.group_sale_manager"
+                         attrs="{'invisible': ['|', ('active', '=', True), ('product_variant_count', '&gt;', 1)]}">
+                        <field name="standard_price2" widget='monetary'
+                               options="{'currency_field': 'currency_id'}"/>
+                    </div>
+                </div>
+                <xpath expr="//sheet" position="after">
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherit_product_normal_form_view" model="ir.ui.view">
+            <field name="name">product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+
+                <field name="barcode" position="after">
+                    <field name="is_kit" invisible="1"/>
+                </field>
+                <field name="standard_price" position="attributes">
+                    <attribute name="force_save">1</attribute>
+                </field>
+<!--                <field name="list_price" position="attributes">-->
+<!--                    <attribute name="name">list_price</attribute>-->
+<!--&lt;!&ndash;                    <attribute name="attrs">{'readonly': [('product_variant_count', '&gt;', 1)]}</attribute>&ndash;&gt;-->
+<!--                </field>-->
+                <field name="company_id" position="before">
+                    <field name="mrp" force_save="1"/>
+
+                </field>
+            </field>
+        </record>
+
+        <record id="product_template_mrp_form_inherit" model="ir.ui.view">
+            <field name="name">product.template.form</field>
+            <field name="model">product.template</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="mrp.product_template_form_view_bom_button"/>
+            <field name="arch" type="xml">
+                <field name="bom_count" position="attributes">
+                    <attribute name="string">Kit Contains</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="l10n_in.product_template_hsn_code">
+            <field name="name">l10n_in.product.template.form.hsn_code</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <field name="categ_id" position="after">
+                    <field name="l10n_in_hsn_code" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
+        <!--=======================search view =======================================-->
+
+        <record id="inherit_search_view" model="ir.ui.view">
+            <field name="name">product.template.search.bom</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <!--<field name="name" position="after">-->
+                <!--<field name="sale_ok" string="Sale OK"/>-->
+                <!--</field>-->
+                <xpath expr="//filter[@name='consumable']" position="after">
+                    <separator/>
+                    <filter string="Kit Products" name="kit" domain="[('is_kit','=', True)]"/>
+                    <filter string="Packaging Products" name="packaging"
+                            domain="[('packaging_product','=', True)]"/>
+                </xpath>
+            </field>
+        </record>
+        <!--===============================tree view inherit=================================-->
+
+        <record id="tree_inherit_product_templ" model="ir.ui.view">
+            <field name="name">product.template.stock.tree.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.view_stock_product_template_tree"/>
+            <field name="arch" type="xml">
+                <!--<field name="virtual_available" position="after">-->
+                <!--<field name="state"/>-->
+                <!--</field>-->
+                <field name="list_price" position="attributes">
+                    <attribute name="string">MSP</attribute>
+                </field>
+                <field name="type" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="standard_price" position="after">
+                     <field name="mrp"/>
+                    <field name="hsn_code" required="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_product_template_tree_cost" model="ir.ui.view">
+            <field name="name">product tree view: Cost Group</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view" />
+            <field name="arch" type="xml">
+                <field name="standard_price" position="attributes">
+                    <attribute name="groups">qms_product_management.group_product_cost</attribute>
+                </field>
+            </field>
+        </record>
+        <!--=======================sample product tree view========================-->
+        <record id="sample_stock_tree" model="ir.ui.view">
+            <field name="name">product.template.product.tree</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <tree string="Product">
+                    <field name="sequence" widget="handle"/>
+                    <field name="default_code"/>
+                    <field name="name"/>
+                    <field name="list_price" string="MSP" groups="sales_team.group_sale_manager"/>
+                    <field name="standard_price" groups="sales_team.group_sale_manager"/>
+                    <field name="categ_id"/>
+                    <field name="type"/>
+                    <field name="uom_id" options="{'no_open': True, 'no_create': True}"/>
+                    <field name="active" invisible="1"/>
+                    <field name="sample_qty"/>
+                    <field name="virtual_available"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--=====================stock product======================================-->
+        <record id="stock_product_tree" model="ir.ui.view">
+            <field name="name">product.template.product.tree</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <tree string="Product">
+                    <field name="sequence" widget="handle"/>
+                    <field name="default_code"/>
+                    <field name="name"/>
+                    <field name="list_price" string="MSP" groups="sales_team.group_sale_manager"/>
+                    <field name="standard_price"/>
+                    <field name="categ_id"/>
+                    <field name="type"/>
+                    <field name="uom_id" options="{'no_open': True, 'no_create': True}" />
+                    <field name="active" invisible="1"/>
+                    <field name="virtual_available"/>
+                    <field name="stock_qty"/>
+                </tree>
+            </field>
+        </record>
+        <!--==================inherit product template action===================-->
+
+        <record id="stock.product_template_action_product" model="ir.actions.act_window">
+            <field name="name">Products</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="context">{"search_default_consumable": 1, 'default_type': 'product', 'default_active': False}</field>
+            <field name="view_id" ref="product.product_template_tree_view"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to define a new product.
+                </p>
+            </field>
+        </record>
+
+        <!--========================inherit product action in mrp========================-->
+
+        <record id="mrp.product_template_action" model="ir.actions.act_window">
+            <field name="name">Products</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{"search_default_consumable": 1, 'default_type': 'product','create': False}</field>
+        </record>
+
+        <!--====================inherit product template action in sale==================-->
+
+        <record id="product.product_template_action" model="ir.actions.act_window">
+            <field name="name">Products</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{"search_default_consumable": 1, 'default_type': 'product','create': False}</field>
+        </record>
+
+
+        <!--====================menu for inactive product=========================-->
+
+        <record id="product_template_inactive_action" model="ir.actions.act_window">
+            <field name="name">Products</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_id" ref="product.product_template_kanban_view"/>
+            <field name="domain">[('active', '=', False)]</field>
+            <field name="context">{"search_default_consumable": 1, 'default_type': 'product', 'create': False}</field>
+        </record>
+
+
+        <record id="action_inactive_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="tree_inherit_product_templ"/>
+            <field name="act_window_id" ref="product_template_inactive_action"/>
+        </record>
+
+        <record id="action_inactive_form" model="ir.actions.act_window.view">
+            <field eval="3" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="product.product_template_only_form_view"/>
+            <field name="act_window_id" ref="product_template_inactive_action"/>
+        </record>
+
+        <record id="action_inactive_kanban" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="product.product_template_kanban_view"/>
+            <field name="act_window_id" ref="product_template_inactive_action"/>
+        </record>
+
+        <!--===================Waiting for approval product=======================-->
+
+<!--        <record id="product_template_waiting_approval_action" model="ir.actions.act_window">-->
+<!--            <field name="name">Products</field>-->
+<!--            <field name="res_model">product.template</field>-->
+<!--            <field name="view_mode">kanban,tree,form</field>-->
+<!--            <field name="view_id" ref="product.product_template_kanban_view"/>-->
+<!--            <field name="domain">[('state', '=', 'waiting_approval'),('active', '=', False)]</field>-->
+<!--            <field name="context">{"search_default_consumable": 1, 'default_type': 'product', 'create': False, 'default_active': False}</field>-->
+<!--        </record>-->
+
+<!--        <record id="action_waiting_approval_tree" model="ir.actions.act_window.view">-->
+<!--            <field eval="1" name="sequence"/>-->
+<!--            <field name="view_mode">tree</field>-->
+<!--            <field name="view_id" ref="tree_inherit_product_templ"/>-->
+<!--            <field name="act_window_id" ref="product_template_waiting_approval_action"/>-->
+<!--        </record>-->
+
+<!--        <record id="action_waiting_approval_form" model="ir.actions.act_window.view">-->
+<!--            <field eval="3" name="sequence"/>-->
+<!--            <field name="view_mode">form</field>-->
+<!--            <field name="view_id" ref="product.product_template_only_form_view"/>-->
+<!--            <field name="act_window_id" ref="product_template_waiting_approval_action"/>-->
+<!--        </record>-->
+
+<!--        <record id="action_waiting_approval_kanban" model="ir.actions.act_window.view">-->
+<!--            <field eval="2" name="sequence"/>-->
+<!--            <field name="view_mode">kanban</field>-->
+<!--            <field name="view_id" ref="product.product_template_kanban_view"/>-->
+<!--            <field name="act_window_id" ref="product_template_waiting_approval_action"/>-->
+<!--        </record>-->
+
+<!--        <menuitem-->
+<!--                action="product_template_waiting_approval_action"-->
+<!--                id="menu_waiting_approval"-->
+<!--                name="Waiting For Approval"-->
+<!--                parent="qms_product_management.product_approval_main_menu" sequence="2"/>-->
+
+        <!--&lt;!&ndash;=======================craete draft product=======================&ndash;&gt;-->
+
+<!--        <record id="product_template_draft_action_sale" model="ir.actions.act_window">-->
+<!--            <field name="name">New Products</field>-->
+<!--            <field name="res_model">product.template</field>-->
+<!--            <field name="view_mode">kanban,tree,form</field>-->
+<!--            <field name="view_id" ref="product.product_template_kanban_view"/>-->
+<!--            <field name="domain">[('state','=', 'draft'),('active', '=', False)]</field>-->
+<!--            <field name="context">{"search_default_consumable": 1, 'default_type': 'product', 'default_active': False, 'create': False}</field>-->
+<!--        </record>-->
+
+
+<!--        <record id="action_draft_sale_tree" model="ir.actions.act_window.view">-->
+<!--            <field eval="1" name="sequence"/>-->
+<!--            <field name="view_mode">tree</field>-->
+<!--            <field name="view_id" ref="product.product_template_tree_view"/>-->
+<!--            <field name="act_window_id" ref="product_template_draft_action_sale"/>-->
+<!--        </record>-->
+
+<!--        <record id="action_draft_sale_form" model="ir.actions.act_window.view">-->
+<!--            <field eval="3" name="sequence"/>-->
+<!--            <field name="view_mode">form</field>-->
+<!--            <field name="view_id" ref="product.product_template_only_form_view"/>-->
+<!--            <field name="act_window_id" ref="product_template_draft_action_sale"/>-->
+<!--        </record>-->
+
+<!--        <record id="action_draft_sale_kanban" model="ir.actions.act_window.view">-->
+<!--            <field eval="2" name="sequence"/>-->
+<!--            <field name="view_mode">kanban</field>-->
+<!--            <field name="view_id" ref="product.product_template_kanban_view"/>-->
+<!--            <field name="act_window_id" ref="product_template_draft_action_sale"/>-->
+<!--        </record>-->
+
+<!--        <menuitem-->
+<!--                action="product_template_draft_action_sale"-->
+<!--                id="menu_draft_product_sale"-->
+<!--                name="Draft"-->
+<!--                parent="qms_product_management.product_approval_main_menu" sequence="1"/>-->
+
+        <!--==========================reject product=======================================-->
+
+<!--        <record id="product_template_reject" model="ir.actions.act_window">-->
+<!--            <field name="name">Rejected Products</field>-->
+<!--            <field name="res_model">product.template</field>-->
+<!--            <field name="view_mode">kanban,tree,form</field>-->
+<!--            <field name="view_id" ref="product.product_template_kanban_view"/>-->
+<!--            <field name="domain">[('state','=', 'reject'), ('active','=', False)]</field>-->
+<!--            <field name="context">{"search_default_consumable": 1, 'default_type': 'product', 'default_active': False, 'create': False}</field>-->
+<!--        </record>-->
+
+
+<!--        <record id="action_reject_sale_tree" model="ir.actions.act_window.view">-->
+<!--            <field eval="1" name="sequence"/>-->
+<!--            <field name="view_mode">tree</field>-->
+<!--            <field name="view_id" ref="product.product_template_tree_view"/>-->
+<!--            <field name="act_window_id" ref="product_template_reject"/>-->
+<!--        </record>-->
+
+<!--        <record id="action_draft_reject" model="ir.actions.act_window.view">-->
+<!--            <field eval="3" name="sequence"/>-->
+<!--            <field name="view_mode">form</field>-->
+<!--            <field name="view_id" ref="product.product_template_only_form_view"/>-->
+<!--            <field name="act_window_id" ref="product_template_reject"/>-->
+<!--        </record>-->
+
+<!--        <record id="action_reject_kanban" model="ir.actions.act_window.view">-->
+<!--            <field eval="2" name="sequence"/>-->
+<!--            <field name="view_mode">kanban</field>-->
+<!--            <field name="view_id" ref="product.product_template_kanban_view"/>-->
+<!--            <field name="act_window_id" ref="product_template_reject"/>-->
+<!--        </record>-->
+
+<!--        <menuitem-->
+<!--                action="product_template_reject"-->
+<!--                id="menu_reject_product"-->
+<!--                name="Rejected"-->
+<!--                parent="qms_product_management.product_approval_main_menu" sequence="3"/>-->
+
+
+        <!--========================sample product menu under sale===========================-->
+
+        <record id="product_template_sample_product_for_sale" model="ir.actions.server">
+            <field name="name">Sample location's products</field>
+            <field name="model_id" ref="product.model_product_template"/>
+            <field name="state">code</field>
+            <field name="code">action = model.product_template_sample_product_for_sale()</field>
+        </record>
+
+        <!--Update View: Qty on Hangd-->
+        <record id="view_change_product_quantity" model="ir.ui.view">
+            <field name="name">Change Product Quantity</field>
+            <field name="model">stock.quant</field>
+            <field name="inherit_id" ref="stock.view_stock_quant_tree_editable"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='lot_id']" position="after">
+                    <field name="mrp"/>
+                </xpath>
+
+            </field>
+
+        </record>
+
+<!--         view used for product.template only-->
+<!--        <record model="ir.ui.view" id="product_template_form_view_procurement_button">-->
+<!--        <field name="name">product.template_procurement</field>-->
+<!--        <field name="model">product.template</field>-->
+<!--        <field name="inherit_id" ref="product.product_template_only_form_view"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--        </field>-->
+<!--        </record>-->
+    </data>
+</odoo>

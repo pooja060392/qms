@@ -1,0 +1,77 @@
+<odoo>
+    <data>
+
+        <menuitem
+            action="action_sample_sale_order"
+            id="menu_sample_sale"
+            name="Sample Orders"
+            parent="sale.sale_order_menu" sequence="2"/>
+
+        <menuitem
+            action="action_gift_sale_order"
+            id="menu_gift"
+            name="Gift Orders"
+            parent="sale.sale_order_menu" sequence="2"/>
+
+        <menuitem id="samples_approval_menu" name="Sample Approval"
+            parent="crm.crm_menu_root"
+            sequence="2"/>
+
+<!--        <menuitem id="gcrm_main_menu" name="GCRM Orders"-->
+<!--            parent="sale.sale_menu_root" groups="qms_sale_orders.group_gcrm"-->
+<!--            sequence="3"/>-->
+
+
+
+        <menuitem id="sale.res_partner_menu"
+            parent="sale.sale_order_menu"
+            action="base.action_partner_form"
+            sequence="8" groups="sales_team.group_sale_salesman"/>
+
+<!--        <menuitem-->
+<!--            action="action_gcrm_order_unprocessed"-->
+<!--            id="menu_gcrm_unprocessed"-->
+<!--            name="Unprocessed Orders" groups="qms_sale_orders.group_gcrm"-->
+<!--            parent="qms_sale_orders.gcrm_main_menu" sequence="1"/>-->
+
+<!--        <menuitem-->
+<!--            action="action_gcrm-->
+<!--        <menuitem-->
+<!--            action="action_gcrm_order_processed"-->
+<!--            id="menu_gcrm_processed"-->
+<!--            name="Processed Orders" groups="qms_sale_orders.group_gcrm"-->
+<!--            parent="qms_sale_orders.gcrm_main_menu" sequence="2"/>-->
+
+<!--&lt;!&ndash;        <menuitem id="gcrm_import"&ndash;&gt;-->
+<!--&lt;!&ndash;            parent="qms_sale_orders.gcrm_main_menu" groups="qms_sale_orders.group_gcrm"&ndash;&gt;-->
+<!--&lt;!&ndash;            action="qms_sale_orders.action_import_gcrm"&ndash;&gt;-->
+<!--&lt;!&ndash;            sequence="5"/>&ndash;&gt;_order_processed"-->
+<!--            id="menu_gcrm_processed"-->
+<!--            name="Processed Orders" groups="qms_sale_orders.group_gcrm"-->
+<!--            parent="qms_sale_orders.gcrm_main_menu" sequence="2"/>-->
+
+<!--        <menuitem id="gcrm_import"-->
+<!--            parent="qms_sale_orders.gcrm_main_menu" groups="qms_sale_orders.group_gcrm"-->
+<!--            action="qms_sale_orders.action_import_gcrm"-->
+<!--            sequence="5"/>-->
+
+        <menuitem
+            action="action_sample_sale_order_waiting"
+            id="menu_sample_sale_waiting"
+            name="Waiting for Approval"
+            parent="qms_sale_orders.samples_approval_menu" sequence="1"/>
+
+        <menuitem
+            action="action_sample_approved"
+            id="menu_sample_approved"
+            name="Approved"
+            parent="qms_sale_orders.samples_approval_menu" sequence="2"/>
+
+        <menuitem
+            action="action_sample_cancel"
+            id="menu_sample_cancel"
+            name="Rejected"
+            parent="qms_sale_orders.samples_approval_menu" sequence="3"/>
+
+    </data>
+</odoo>

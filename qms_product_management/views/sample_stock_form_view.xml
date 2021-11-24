@@ -1,0 +1,199 @@
+<odoo>
+    <data>
+        <record id="product_sample_stock_form_view" model="ir.ui.view">
+        <field name="name">product.template.common.form</field>
+        <field name="model">product.template</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <form string="Product">
+                <header>
+
+                    <button string="Variant Prices" type="action"
+                        name="%(product.product_attribute_value_action)d"
+                        attrs="{'invisible': [('product_variant_count', '&lt;=', 1)]}"
+                        groups="product.group_product_variant"/>
+                </header>
+                <sheet>
+                    <!---->
+                    <field name='product_variant_count' invisible='1'/>
+                    <field name="id" invisible="True"/>
+                    <div class="oe_button_box" name="button_box">
+
+                        <button string="Product Moves" type="object"
+                            name= "action_view_stock_move_lines"
+                            attrs="{'invisible':[('type', 'not in', ['product', 'consu'])]}"
+                            class="oe_stat_button" icon="fa-arrows-v"
+                            groups="stock.group_stock_user"/>
+                        <button type="object"
+                            name="action_view_orderpoints"
+                            attrs="{'invisible':['|',('type', '!=', 'product'),('nbr_reordering_rules', '==', 1)]}"
+                            class="oe_stat_button"
+                            icon="fa-refresh">
+                            <field name="nbr_reordering_rules" widget="statinfo"/>
+                         </button>
+                        <button type="object"
+                            name="action_view_orderpoints"
+                            attrs="{'invisible':['|',('type', '!=', 'product'),('nbr_reordering_rules', '!=', 1)]}"
+                            class="oe_stat_button" icon="fa-refresh">
+                            <div class="o_field_widget o_stat_info mr4">
+                                <span class="o_stat_text">Min:</span>
+                                <span class="o_stat_text">Max:</span>
+                            </div>
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value"><field name="reordering_min_qty"/></span>
+                                <span class="o_stat_value"><field name="reordering_max_qty"/></span>
+                            </div>
+                        </button>
+                        <button string="Routes" type="object"
+                            name="action_view_routes"
+                            attrs="{'invisible':[('type', '!=', 'product')]}"
+                            class="oe_stat_button" icon="fa-cogs"
+                            groups="base.group_no_one"/>
+                        <button string="Lot/Serial Number" type="object"
+                            name="action_open_product_lot"
+                            attrs="{'invisible': [('tracking', '=', 'none')]}"
+                            class="oe_stat_button" icon="fa-bars" groups="stock.group_production_lot"/>
+
+                        <button class="oe_stat_button" name="action_view_sales"
+                        type="object" icon="fa-usd" groups="sales_team.group_sale_salesman">
+                        <field string="Sales" name="sales_count" widget="statinfo" />
+                        </button>
+                        <button class="oe_stat_button" name="%(mrp.template_open_bom)d" type="action"
+                        attrs="{'invisible':[('type', 'not in', ['product', 'consu'])]}" icon="fa-flask">
+                        <field string="Bill of Materials" name="bom_count" widget="statinfo" />
+                        </button>
+                        <button class="oe_stat_button" name="action_used_in_bom" type="object"
+                            attrs="{'invisible':['|',('type', 'not in', ['product', 'consu']), ('used_in_bom_count', '=', 0)]}" icon="fa-level-up">
+                            <field string="Used In" name="used_in_bom_count" widget="statinfo" />
+                        </button>
+                        <button class="oe_stat_button" name="action_view_mos" type="object"
+                            attrs="{'invisible':[('type', 'not in', ['product', 'consu'])]}" icon="fa-list-alt">
+                            <field string="Manufacturing" name="mo_count" widget="statinfo" />
+                        </button>
+                        <button name="toggle_active" type="object"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <field name="image_medium" widget="image" class="oe_avatar"/>
+                    <field name="tracking" invisible="1"/>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="Product Name"/>
+                        <h1><field name="name" placeholder="Product Name"/></h1>
+                        <div name="options" groups="base.group_user">
+                            <div>
+                                <field name="sale_ok"/>
+                                <label for="sale_ok"/>
+                            </div>
+                            <div>
+                                <field name="purchase_ok"/>
+                                <label for="purchase_ok"/>
+                            </div>
+                        </div>
+                    </div>
+                    <notebook>
+                        <page string="General Information" name="general_information">
+                            <group>
+                                <group name="group_general">
+                                    <field name="type"/>
+                                    <field name="categ_id" string="Category"/>
+                                </group>
+                                <group name="group_standard_price">
+                                    <field name="list_price" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                                    <label for="standard_price" groups="base.group_user" attrs="{'invisible': [('product_variant_count', '&gt;', 1)]}"/>
+                                    <div name="standard_price_uom" groups="base.group_user" attrs="{'invisible': [('product_variant_count', '&gt;', 1)]}">
+                                        <field name="standard_price" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                                    </div>
+                                    <field name="company_id" groups="base.group_multi_company"
+                                        options="{'no_create': True}"/>
+                                    <field name="uom_id" groups="product.group_uom" options="{'no_create': True}"/>
+                                    <field name="uom_po_id" groups="product.group_uom" options="{'no_create': True}"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="product_variant_id" invisible="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="variants" string="Variants" groups="product.group_product_variant">
+                            <field name="attribute_line_ids" widget="one2many_list" context="{'show_attribute': False}">
+                                <tree string="Variants" editable="bottom">
+                                    <field name="attribute_id"/>
+                                    <field name="value_ids" widget="many2many_tags" options="{'no_create_edit': True}" domain="[('attribute_id', '=', attribute_id)]" context="{'default_attribute_id': attribute_id}"/>
+                                </tree>
+                            </field>
+                                <p class="oe_grey">
+                                <strong>Warning</strong>: adding or deleting attributes
+                                will delete and recreate existing variants and lead
+                                to the loss of their possible customizations.
+                            </p>
+                        </page>
+                        <page string="Sales" attrs="{'invisible':[('sale_ok','=',False)]}" name="sales">
+                            <div name="pricelist_item" groups="product.group_product_pricelist">
+                                <separator string="Pricing"/>
+                                <field name="item_ids" nolabel="1" context="{'default_base':'list_price', 'default_applied_on' :'1_product'}">
+                                    <tree string="Pricelist Items" editable="bottom">
+                                        <field name="pricelist_id" string="Pricelist" required='1'/>
+                                        <field name="fixed_price" string="Price" required='1'/>
+                                        <field name="min_quantity"/>
+                                        <field name="date_start"/>
+                                        <field name="date_end"/>
+                                        <field name="applied_on" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <group name="sale">
+                                <group name="email_template_and_project"
+                                    attrs="{'invisible':[('type', '!=', 'service')]}"/>
+                            </group>
+                        </page>
+                        <page string="Inventory" name="inventory" groups="stock.group_stock_user,product.group_stock_packaging" attrs="{'invisible':[('type', '=', 'service')]}">
+                            <group name="packaging" string="Packaging"
+                                colspan="4"
+                                attrs="{'invisible':['|', ('type', 'not in', ['product', 'consu']), ('product_variant_count', '>', 1)]}"
+                                groups="product.group_stock_packaging">
+                                <field name="packaging_ids" nolabel="1" context="{'default_product_id': product_variant_id,'tree_view_ref':'product.product_packaging_tree_view', 'form_view_ref':'product.product_packaging_form_view'}"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <group name="description">
+                                <group string="Description for Customers" attrs="{'invisible': [('sale_ok','=',False)]}">
+                                    <field name="description_sale" nolabel="1" placeholder="This note will show up on sales orders."/>
+                                </group>
+                            </group>
+                            <group name="warning">
+                                <group name="sale_warning"/>
+                                <group name="purchase_warning"/>
+                            </group>
+                         </page>
+                        <page name="inventory" position="after">
+                    <page string="Invoicing" name="invoicing">
+                        <group name="properties">
+                            <group string="Receivables">
+                                <field name="taxes_id" widget="many2many_tags"/>
+                                <field name="property_account_income_id"
+                                    domain="[('internal_type','=','other'),('deprecated','=',False)]"
+                                    groups="account.group_account_user"/>
+                            </group>
+                            <group string="Payables" name="payables">
+                                <field name="supplier_taxes_id" widget="many2many_tags"/>
+                                <field name="property_account_expense_id"
+                                    domain="[('internal_type','=','other'),('deprecated','=',False)]"
+                                    groups="account.group_account_user"/>
+                            </group>
+                        </group>
+                        <group name="accounting"/>
+                        <group name="invoicing" invisible="1"/>
+                    </page>
+                </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    </data>
+</odoo>

@@ -1,0 +1,26 @@
+
+<odoo>
+    <data>
+<!-- Wizard form view -->
+    <record id="view_send_for_approval_so" model="ir.ui.view">
+        <field name="name">so.approval.wiz</field>
+        <field name="model">so.approval.wiz</field>
+        <field name="arch" type="xml">
+        <form string="Select User">
+                <group>
+                    <group>
+                        <field name="user_id" required="1"
+                               options="{'no_create': True, 'no_open': True}" domain="[('sales_approval','=',True)]"/>
+                    </group>
+                </group>
+        <footer>
+            <button name="send_for_so_approval" string="Send" type="object" class="btn-primary"/>
+            <button string="Cancel" class="btn-default" special="cancel" />
+        </footer>
+        </form>
+        </field>
+        </record>
+
+
+    </data>
+</odoo>

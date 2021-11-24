@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale_order_view_form_inherit_location_qty" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref = 'sale.view_order_form'/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page/field[@name='order_line']/tree/field[@name='price_subtotal']"
+                       position="after">
+                    <field name="state" invisible="1"/>
+                    <button name="%(location_wise_quantity.action_location_quantity)d"
+                            string="View Inventory" type="action" class="btn-primary"
+                            attrs="{'invisible': [('state', '=', 'sale')]}"
+                    />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

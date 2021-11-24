@@ -1,0 +1,28 @@
+<odoo>
+    <template id="report_purchase_order_report" inherit_id="purchase.report_purchaseorder_document">
+        <xpath expr="//table[@class='table table-condensed']" position="after">
+            <table style="width: 50%;">
+                <tbody>
+                    <tr>
+                        <td style="width: 29.7491%;">Created By</td>
+                        <td style="width: 64.2509%;"><span t-esc="o.created_by.name"/></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 29.7491%;">Approved By</td>
+                        <td style="width: 64.2509%;"><span t-esc="o.approved_by"/></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 29.7491%;">Approved Date</td>
+                        <td style="width: 64.2509%;"><span t-esc="o.date_approve"/></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 29.7491%;">Status:</td>
+                        <td style="width: 64.2509%;"><span t-esc="o.status_po"/></td>
+                    </tr>
+                    <br/>
+                    <br/>
+                </tbody>
+            </table>
+        </xpath>
+    </template>
+</odoo>

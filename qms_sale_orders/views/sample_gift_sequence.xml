@@ -1,0 +1,25 @@
+<odoo>
+    <data noupdate="0">
+        <record id="sample_gift_sequence" model="ir.sequence">
+            <field name="name">Sample Sequence</field>
+            <field name="code">Sale.order.sample</field>
+            <field name="prefix">SAMPLE/</field>
+            <field name="padding">4</field>
+        </record>
+
+<!--        <record id="gcrm_sequence" model="ir.sequence">-->
+<!--            <field name="name">GCRM Sequence</field>-->
+<!--            <field name="code">sale.order.gcrm</field>-->
+<!--            <field name="prefix">GCRM/</field>-->
+<!--            <field name="padding">4</field>-->
+<!--        </record>-->
+
+
+        <record id="gift_sequence" model="ir.sequence">
+            <field name="name">Gift Sequence</field>
+            <field name="code">sale.order.gift</field>
+            <field name="prefix">GIFT/</field>
+            <field name="padding">4</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="email_template_customization_to_packaging" model="mail.template">
+            <field name="name">Packaging Information Required</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">Packaging Information Required for ${object.name} </field>
+            <field name="auto_delete" eval="False" />
+            <field name="body_html"><![CDATA[
+            <p>Dear Packaging Team,</p>
+            <p>Packaging Information is required for Quotation ${object.name},
+            please follow the link to fill the information. </p>
+            <p>
+                <a href="_sale_url" style="background-color: #9E588B; margin-top: 5px; padding: 10px;
+                text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;">View Quotation</a>
+            </p><br/>
+            <p>Thank You</p>
+            ]]>
+            </field>
+        </record>
+
+        <record id="email_template_customization_to_sales" model="mail.template">
+            <field name="name">Packaging Information Filled</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">Packaging Information Filled for ${object.name} </field>
+            <field name="auto_delete" eval="False" />
+            <field name="body_html"><![CDATA[
+            <p>Dear Packaging Team,</p>
+            <p>Packaging Information has been filled by Packaging Team for Quotation ${object.name},
+            please follow the link to process the Quotation. </p>
+            <p>
+                <a href="_sale_url" style="background-color: #9E588B; margin-top: 5px; padding: 10px;
+                text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;">View Quotation</a>
+            </p><br/>
+            <p>Thank You</p>
+            ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

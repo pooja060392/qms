@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_labour_name_admin,labour.name,qms_inventory.model_labour_name,base.group_user,1,1,1,1
+access_labour_detail_line_admin,labour.detail.line,qms_inventory.model_labour_detail_line,base.group_user,1,1,1,1

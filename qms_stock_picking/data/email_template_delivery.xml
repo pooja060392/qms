@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data >
+        <record id="sale_delivery_mail_template" model="mail.template">
+            <field name="name">Delivery Mail</field>
+            <!--<field name="email_from">${object.order_id.partner_id.email or ''}</field>-->
+            <!--<field name="email_to">${object.user_id.partner_id.email or ''}</field>-->
+            <field name="subject">Delivery Order Confirmed : ${object.origin}</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <!--<field name="report_name">${'Report'}</field>-->
+            <!--<field name="report_template" ref="gts_nidra_hotel_crm.confirm_line_report_view"/>-->
+                <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+
+<br/>
+        <p>Hi  ${object.user_id.name},</p>
+        <p>Delivery Order has been confirmed against Order ${object.origin}</p>
+
+
+
+   <br/>
+
+  Thanks & Regards, <br/>
+
+  <p></p>
+
+<br/>
+
+</p>
+
+</div>
+            ]]></field>
+        </record>
+    </data>
+</odoo>
+
+ <!--<p>Please follow the below link.</p>-->
+                <!--<p>-->
+                <!--<a href="_sale_url" style="background-color: #9E588B; margin-top: 5px; padding: 10px;-->
+                <!--text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;">Click Here</a>-->
+                <!--</p>-->
+
+            <!--<p style="color:#9E588B;">Powered by <a target="_blank" href="https://www.odoo.com">Odoo</a>.</p>-->

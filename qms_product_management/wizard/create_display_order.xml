@@ -1,0 +1,41 @@
+<odoo>
+    <data>
+
+        <record id="create_display_order_form_view" model="ir.ui.view">
+            <field name="name">create.display.form</field>
+            <field name="model">create.display.order</field>
+            <field name="arch" type="xml">
+                <form string="Create Display Orders">
+                    <p class="oe_grey">
+                        Select Product for create display order
+                    </p>
+                    <footer>
+                        <button string="Create Display" name="create_display" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="open_display_order_action"
+             multi="True" name="Create Display Order"
+            res_model="sale.order" context="{'default_partner_id': context.get('default_opportunity_customer_id', False), 'default_opportunity_id': context.get('default_opportunity_id', False)}"
+             src_model="product.template" domain="[('sale_type', '=', 'display')]"
+             view_mode="form"/>
+
+
+        <!--<act_window id="open_display_order_action"-->
+            <!--multi="True" name="Create Display Order"-->
+            <!--res_model="sale.order" context="{'partner_id': partner_id}"-->
+            <!--src_model="product.template" domain="[('sale_type', '=', 'display')]" target="current"-->
+            <!--view_mode="form" view_type="form"/>-->
+
+        <record id="action_display" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="gts_qms_sale_orders.display_sale_order_form_view"/>
+            <field name="act_window_id" ref="open_display_order_action"/>
+        </record>
+
+    </data>
+</odoo>

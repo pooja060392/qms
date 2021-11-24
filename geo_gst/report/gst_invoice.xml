@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<report
+			id="gst_invoice_xlsx"
+			model="account.move"
+			string="Print Invoice"
+			report_type="qweb-pdf"
+			name="account.move.gst1.xlsx"
+			file="account.move.gst1.xlsx"
+			attachment_use="False"
+		/>
+	</data>
+</odoo>

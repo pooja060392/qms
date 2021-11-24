@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<report
+			id="gstr_b2cl_report"
+			model="account.move"
+			string="GSTR-B2CL"
+			report_type="qweb-pdf"
+			name="account.gstr.b2cl.xlsx"
+			file="account.gstr.b2cl.xlsx"
+			attachment_use="False"
+		    menu="False"
+		/>
+	</data>
+</odoo>

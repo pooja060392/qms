@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="product_product_procurement_tree_view" model="ir.ui.view">
+        <field name="name">product.product.product.tree.procurement</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <tree string="Product" create="false" edit="false" delete="false">
+                <field name="sequence" widget="handle"/>
+                <field name="default_code"/>
+                <field name="name"/>
+                <field name="list_price"/>
+                <field name="standard_price"/>
+                <field name="categ_id"/>
+                <field name="type"/>
+                <field name="qty_available"/>
+                <field name="virtual_available"/>
+                <field name="to_procure"/>
+                <field name="uom_id" options="{'no_open': True, 'no_create': True}"
+                     />
+                <field name="active" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="product_product_procurement_form_view" model="ir.ui.view">
+        <field name="name">product.product.common.form.procurement</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <form string="Product" create="false" edit="false" delete="false">
+                <header>
+                </header>
+                <sheet>
+                    <field name='product_variant_count' invisible='1'/>
+                    <field name="id" invisible="True"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+<!--                    <field name="image_medium" widget="image" class="oe_avatar"/>-->
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="Product Name"/>
+                        <h1><field name="name" placeholder="Product Name"/></h1>
+                        <div name="options" groups="base.group_user">
+                            <div>
+                                <field name="sale_ok"/>
+                                <label for="sale_ok"/>
+                            </div>
+                            <div>
+                                <field name="purchase_ok"/>
+                                <label for="purchase_ok"/>
+                            </div>
+                        </div>
+                    </div>
+                    <notebook>
+                        <page string="General Information" name="general_information">
+                            <group>
+                                <group name="group_general">
+                                    <field name="qty_available"/>
+                                    <field name="virtual_available"/>
+                                    <field name="to_procure"/>
+                                    <!--<field name="packaging_product"/>-->
+                                </group>
+                                <group name="group_standard_price">
+                                    <field name="type"/>
+                                    <field name="categ_id" string="Category"/>
+                                    <!--<field name="list_price" widget='monetary' options="{'currency_field': 'currency_id'}"/>-->
+                                    <!--<label for="standard_price" groups="base.group_user" attrs="{'invisible': [('product_variant_count', '&gt;', 1)]}"/>-->
+                                    <!--<div name="standard_price_uom" groups="base.group_user" attrs="{'invisible': [('product_variant_count', '&gt;', 1)]}">-->
+                                        <!--<field name="standard_price" widget='monetary' options="{'currency_field': 'currency_id'}"/>-->
+                                    <!--</div>-->
+                                    <field name="uom_id" options="{'no_create': True}"/>
+                                    <field name="uom_po_id"  options="{'no_create': True}"/>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="relates_moves" readonly="1"
+                                       domain="[('state','in',('partially_available','waiting','confirmed','assigned')),
+                                       ('location_id','in',context.get('location',[])),
+                                       ('location_dest_id','not in',context.get('location',[]))]">
+                                    <tree string="Moves" create="false">
+                                        <field name="origin"/>
+                                        <field name="group_id"/>
+<!--                                        <field name="date_expected" widget='date'/>-->
+                                        <field name="date" widget="date"/>
+                                        <field name="picking_id" string="Reference" invisible="1"/>
+                                        <field name="sequence" invisible="1"/>
+                                        <field name="product_id" invisible="1"/>
+<!--                                        <field name="ordered_qty" sum="ordered_qty" invisible="1"/>-->
+                                        <field name="product_qty" sum="product_qty" invisible="1"/>
+                                        <field name="product_uom_qty" sum="product_uom_qty"/>
+                                        <field name="product_uom" options="{'no_open': True, 'no_create': True}"
+                                               string="Unit of Measure" />
+                                        <field name="location_id" invisible="1"/>
+                                        <field name="location_dest_id"/>
+                                        <field name="create_date" invisible="1"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--<record id="ir_actions_server_product_product_procurement" model="ir.actions.server">-->
+        <!--<field name="name">To Procure Products</field>-->
+        <!--<field name="model_id" ref="product.model_product_product"/>-->
+        <!--<field name="state">code</field>-->
+        <!--<field name="code">action = model.open_products()</field>-->
+    <!--</record>-->
+
+    <!--<menuitem id="menu_purchase_product_product_procurement"-->
+              <!--action="ir_actions_server_product_product_procurement"-->
+              <!--parent="purchase.menu_procurement_management" sequence="6"/>-->
+
+</odoo>

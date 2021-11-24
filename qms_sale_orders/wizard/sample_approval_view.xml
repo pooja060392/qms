@@ -1,0 +1,41 @@
+<odoo>
+    <data>
+<!-- Wizard form view -->
+    <record id="view_send_for_approval_sample" model="ir.ui.view">
+        <field name="name">sample.approval.wizard.form</field>
+        <field name="model">sample.approval.wizard</field>
+        <field name="arch" type="xml">
+        <form string="Select User">
+                <group>
+                    <group>
+                        <field name="user_id"
+                               required="1"
+                               options="{'no_create': True, 'no_open': True}"
+                               domain="[('is_sample_approval_team','=',True)]"
+                        />
+                        <field name="sale_id" invisible="1"/>
+                    </group>
+                </group>
+        <footer>
+            <button name="send_for_sample_approval" string="Send" type="object" class="btn-primary"/>
+            <button string="Cancel" class="btn-default" special="cancel" />
+        </footer>
+        </form>
+        </field>
+        </record>
+
+
+        <record id="action_send_approval_quotation_sample" model="ir.actions.act_window">
+            <field name="name">Ask for Sample Approval</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sample.approval.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

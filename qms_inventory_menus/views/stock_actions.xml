@@ -1,0 +1,177 @@
+<odoo>
+    <data>
+
+        <record id="view_picking_form_inherit_warehouse" model="ir.ui.view">
+            <field name="name">stock.picking.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref='stock.view_picking_form'/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="warehouse_type" groups="base.group_no_one"/>
+                    <field name="quality_location" groups="base.group_no_one"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherit_view_picking_type_form_warehouse_type" model="ir.ui.view">
+            <field name="name">stock.picking.type.form</field>
+            <field name="model">stock.picking.type</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_picking_type_form"/>
+            <field name="arch" type="xml">
+                <field name="default_location_src_id" position="before">
+                    <field name="warehouse_type"
+                           groups="base.group_no_one"
+                    />
+                    <field name="quality_location" groups="base.group_no_one"/>
+                </field>
+            </field>
+        </record>
+
+        <!--HO ACtions-->
+
+        <record id="action_picking_ho_delivery" model="ir.actions.act_window">
+            <field name="name">Delivery Orders</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('related_code', '=', 'outgoing'), ('warehouse_type', '=', '3')]</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="action_picking_ho_receipts" model="ir.actions.act_window">
+            <field name="name">Receipts</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('related_code', '=', 'incoming'), ('warehouse_type', '=', '3')]</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="action_picking_ho_it" model="ir.actions.act_window">
+            <field name="name">Internal Transfers</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('related_code', '=', 'internal'), ('warehouse_type', '=', '3')]</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="action_picking_ho_mrp" model="ir.actions.act_window">
+            <field name="name">Manufacturing</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('related_code', '=', 'mrp_operation'), ('warehouse_type', '=', '3')]</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="action_picking_ho_quality_to_stock" model="ir.actions.act_window">
+            <field name="name">Quality to Stock</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('quality_location', '=', True), ('warehouse_type', '=', '3')]</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="action_picking_ho_eway_registered" model="ir.actions.act_window">
+            <field name="name">Registered</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('related_code', '=', 'mrp_operation'), ('warehouse_type', '=', '3'), ('state', '=', 'eway_registered')]</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="action_picking_ho_eway_done" model="ir.actions.act_window">
+            <field name="name">Done</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('related_code', '=', 'mrp_operation'), ('warehouse_type', '=', '3'), ('state', '=', 'eway_done')]</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <!--Bhiwandi ACtions-->
+
+
+
+<!--        <record id="action_picking_bhiwandi_delivery" model="ir.actions.act_window">-->
+<!--            <field name="name">Delivery Orders</field>-->
+<!--            <field name="res_model">stock.picking</field>-->
+<!--            <field name="type">ir.actions.act_window</field>-->
+<!--            <field name="view_type">form</field>-->
+<!--            <field name="view_mode">tree,kanban,form,calendar</field>-->
+<!--            <field name="domain">[('related_code', '=', 'incoming'), ('warehouse_type', '=', '1')]</field>-->
+<!--            <field name="search_view_id" ref="stock.view_picking_internal_search"/>-->
+<!--        </record>-->
+
+
+        <record id="action_picking_bhiwandi_delivery" model="ir.actions.act_window">
+            <field name="name">Delivery orders</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('related_code', '=', 'outgoing'), ('warehouse_type', '=', '1')]</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="action_picking_bhiwandi_receipts" model="ir.actions.act_window">
+            <field name="name">Receipts</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('related_code', '=', 'incoming'), ('warehouse_type', '=', '1')]</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="action_picking_bhiwandi_it" model="ir.actions.act_window">
+            <field name="name">Internal Transfers</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('related_code', '=', 'internal'), ('warehouse_type', '=', '1')]</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="action_picking_bhiwandi_mrp" model="ir.actions.act_window">
+            <field name="name">Manufacturing</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('related_code', '=', 'mrp_operation'), ('warehouse_type', '=', '1')]</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="action_picking_bhiwandi_quality_to_stock" model="ir.actions.act_window">
+            <field name="name">Quality to Stock</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('quality_location', '=', True), ('warehouse_type', '=', '1')]</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="action_picking_bhiwandi_eway_registered" model="ir.actions.act_window">
+            <field name="name">Registered</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('related_code', '=', 'mrp_operation'), ('warehouse_type', '=', '1'), ('state', '=', 'eway_registered')]</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="action_picking_bhiwandi_eway_done" model="ir.actions.act_window">
+            <field name="name">Done</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('related_code', '=', 'mrp_operation'), ('warehouse_type', '=', '1'), ('state', '=', 'eway_done')]</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+
+
+    </data>
+</odoo>

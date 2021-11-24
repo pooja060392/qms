@@ -1,0 +1,80 @@
+<odoo>
+    <data>
+
+        <!--HO Menus-->
+        <menuitem id="menu_ho_warehouse_main" name="HO Warehouse" parent="stock.menu_stock_root" sequence="2"/>
+
+        <menuitem id="menu_picking_ho_delivery" parent="qms_inventory_menus.menu_ho_warehouse_main"
+                  action="qms_inventory_menus.action_picking_ho_delivery"
+        sequence="1"/>
+        <menuitem id="menu_picking_ho_receipts" parent="qms_inventory_menus.menu_ho_warehouse_main"
+                  action="qms_inventory_menus.action_picking_ho_receipts"
+        sequence="2"/>
+        <menuitem id="menu_picking_ho_it" parent="qms_inventory_menus.menu_ho_warehouse_main"
+                  action="qms_inventory_menus.action_picking_ho_it"
+        sequence="3"/>
+
+        <menuitem id="menu_picking_ho_mrp" parent="qms_inventory_menus.menu_ho_warehouse_main"
+                  action="qms_inventory_menus.action_picking_ho_mrp"
+        sequence="4"/>
+
+        <menuitem id="menu_picking_ho_quality_to_stock" parent="qms_inventory_menus.menu_ho_warehouse_main"
+                  action="qms_inventory_menus.action_picking_ho_quality_to_stock"
+        sequence="5"/>
+
+        <menuitem id="menu_ho_eway_main" name="Delivery E-Way"
+                  parent="qms_inventory_menus.menu_ho_warehouse_main" sequence="10"/>
+
+        <menuitem id="menu_picking_ho_eway_registered" parent="qms_inventory_menus.menu_ho_eway_main"
+                  action="qms_inventory_menus.action_picking_ho_eway_registered"
+        sequence="1"/>
+
+        <menuitem id="menu_picking_ho_eway_done" parent="qms_inventory_menus.menu_ho_eway_main"
+                  action="qms_inventory_menus.action_picking_ho_eway_done"
+        sequence="2"/>
+
+        <!--Bhwandi Menus-->
+
+        <menuitem id="menu_bhiwandi_warehouse_main" name="Bhiwandi Warehouse" parent="stock.menu_stock_root" sequence="3"/>
+
+        <menuitem id="menu_picking_bhiwandi_delivery" parent="qms_inventory_menus.menu_bhiwandi_warehouse_main"
+                  action="qms_inventory_menus.action_picking_bhiwandi_delivery"
+        sequence="1"/>
+        <menuitem id="menu_picking_bhiwandi_receipts" parent="qms_inventory_menus.menu_bhiwandi_warehouse_main"
+                  action="qms_inventory_menus.action_picking_bhiwandi_receipts"
+        sequence="2"/>
+        <menuitem id="menu_picking_bhiwandi_it" parent="qms_inventory_menus.menu_bhiwandi_warehouse_main"
+                  action="qms_inventory_menus.action_picking_bhiwandi_it"
+        sequence="3"/>
+
+        <menuitem id="menu_picking_bhiwandi_mrp" parent="qms_inventory_menus.menu_bhiwandi_warehouse_main"
+                  action="qms_inventory_menus.action_picking_bhiwandi_mrp"
+        sequence="4"/>
+
+        <menuitem id="menu_picking_bhiwandi_quality_to_stock" parent="qms_inventory_menus.menu_bhiwandi_warehouse_main"
+                  action="qms_inventory_menus.action_picking_bhiwandi_quality_to_stock"
+        sequence="5"/>
+
+        <menuitem id="menu_bhiwaidi_eway_main" name="Delivery E-Way"
+                  parent="qms_inventory_menus.menu_bhiwandi_warehouse_main" sequence="10"/>
+
+        <menuitem id="menu_picking_bhiwandi_eway_registered" parent="qms_inventory_menus.menu_bhiwaidi_eway_main"
+                  action="qms_inventory_menus.action_picking_bhiwandi_eway_registered"
+        sequence="1"/>
+
+        <menuitem id="menu_picking_bhiwandi_eway_done" parent="qms_inventory_menus.menu_bhiwaidi_eway_main"
+                  action="qms_inventory_menus.action_picking_bhiwandi_eway_done"
+        sequence="2"/>
+
+        <!--chunabhatti Menus-->
+
+
+
+
+
+
+
+
+
+    </data>
+</odoo>

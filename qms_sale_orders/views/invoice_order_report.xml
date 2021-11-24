@@ -1,0 +1,381 @@
+<odoo>
+    <data>
+
+        <record id="paperformat_sale" model="report.paperformat">
+            <field name="name">Custom Paper Format</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">28</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+            string="Invoice Order"
+            id="invoice_order_report"
+            model="sale.order"
+            name="qms_sale_orders.invoice_order_tmp"
+            file="qms_sale_orders.invoice_order_tmp"
+            report_type="qweb-pdf"
+            menu="True"
+            paperformat="qms_sale_orders.paperformat_sale"/>
+
+        <record id="report_qweb_paperformat_pos_receipt" model="report.paperformat">
+            <field name="name">POS Receipt</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">150</field>
+            <field name="page_width">60</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">3</field>
+            <field name="margin_bottom">3</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">10</field>
+            <field name="dpi">110</field>
+        </record>
+
+        <template id="invoice_order_tmp">
+            <t t-call="web.basic_layout">
+                <span style="margin-top:0px !important;">
+                    <h1 style="width:100%; margin-top:0px !important; margin-bottom:10px;text-align:center">INVOICE</h1>
+                </span>
+                <t t-foreach="docs" t-as="o">
+                    <table style="width: 100%; border-collapse: collapse">
+                        <tbody>
+                            <tr>
+                                <td style="border-left: 1px solid black;border-right: 1px solid black;border-bottom: 1px solid black; width: 70%;">
+                                    <table style="width: 100%; border-collapse: collapse;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="border-top: 1px solid black;border-bottom: 1px solid black;padding:10px;">
+                                                    <b>CONSIGNOR :-</b>
+                                                    <br/>
+                                                    <t t-if="o.partner_id.name">
+                                                        <span t-field="o.company_id.name"/>
+                                                        <br/>
+                                                    </t>
+                                                    <t t-if="o.partner_id.street">
+                                                        <span t-field="o.company_id.street"/>
+                                                        <br/>
+                                                    </t>
+                                                    <t t-if="o.partner_id.street2">
+                                                        <span t-field="o.company_id.street2"/>
+                                                        <br/>
+                                                    </t>
+                                                    <t t-if="o.partner_id.city">
+                                                        <span t-field="o.company_id.city"/>
+                                                        <br/>
+                                                    </t>
+                                                    <t t-if="o.partner_id.state_id.name">
+                                                        <span t-field="o.company_id.state_id.name"/>
+                                                        <br/>
+                                                    </t>
+                                                    <t t-if="o.partner_id.country_id.name">
+                                                        <span t-field="o.company_id.country_id.name"/>
+                                                    </t>
+                                                    <t t-if="o.partner_id.zip">
+                                                        -
+                                                        <span t-field="o.company_id.zip"/>
+                                                        <br/>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border-top: 1px solid black;border-bottom: 1px solid black;padding:10px;">
+                                                    <b>CONSIGNEE :-</b>
+                                                    <br/>
+                                                    <t t-if="o.partner_shipping_id.name">
+                                                        <span t-field="o.partner_shipping_id.name"/>
+                                                        <br/>
+                                                    </t>
+                                                    <t t-if="o.partner_shipping_id.street">
+                                                        <span t-field="o.partner_shipping_id.street"/>
+                                                        <br/>
+                                                    </t>
+                                                    <t t-if="o.partner_shipping_id.street2">
+                                                        <span t-field="o.partner_shipping_id.street2"/>
+                                                        <br/>
+                                                    </t>
+                                                    <t t-if="o.partner_shipping_id.city">
+                                                        <span t-field="o.partner_shipping_id.city"/>
+                                                        <br/>
+                                                    </t>
+                                                    <t t-if="o.partner_shipping_id.state_id.name">
+                                                        <span t-field="o.partner_shipping_id.state_id.name"/>
+                                                        <br/>
+                                                    </t>
+                                                    <t t-if="o.partner_shipping_id.country_id.name">
+                                                        <span t-field="o.partner_shipping_id.country_id.name"/>
+                                                    </t>
+                                                    <t t-if="o.partner_shipping_id.zip">
+                                                        -
+                                                        <span t-field="o.partner_shipping_id.zip"/>
+                                                        <br/>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table style="width: 100%; border-collapse:collapse;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width: 50%;border-bottom: 1px solid black;border-right: 1px solid black;padding:10px;">
+                                                                    <b>PRE CARRIAGE BY
+                                                                        :
+                                                                    </b>
+                                                                    <br/>
+                                                                    <span t-field="o.pre_carriage_by"/>
+                                                                </td>
+                                                                <td style="width: 50%;border-bottom: 1px solid black;padding:10px;">
+                                                                    <b>PLACE OF RECEIPT
+                                                                        BY PR-CARRIER :
+                                                                    </b>
+                                                                    <br/>
+                                                                    <span t-field="o.place_of_receipt"/>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2"
+                                                                    style="border-top: 1px solid black;border-bottom: 1px solid black;padding:10px;">
+                                                                    <b>COURIER</b>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border-top: 1px solid black;border-bottom: 1px solid black;border-right: 1px solid black;padding:10px;">
+                                                                    <b>VESSEL/FLIGHT
+                                                                        NO. :
+                                                                    </b>
+                                                                    <br/>
+                                                                    <span t-field="o.vessel_flight_no"/>
+                                                                </td>
+                                                                <td style="width: 50%; border-top: 1px solid black;border-bottom: 1px solid black;padding:10px;">
+                                                                    <b>PORT OF LOADING
+                                                                        :
+                                                                    </b>
+                                                                    <br/>
+                                                                    <span t-field="o.port_of_loading"/>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="width: 50%; border-top: 1px solid black;border-right: 1px solid black;padding:10px;">
+                                                                    <b>PORT OF DISE :</b>
+                                                                    <br/>
+                                                                    <span t-field="o.port_of_dise"/>
+                                                                </td>
+                                                                <td style="width: 50%; border-top: 1px solid black;padding:10px;">
+                                                                    <b>FINAL DESTN. :</b>
+                                                                    <br/>
+                                                                    <span t-field="o.final_destn"/>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table style="width: 100%;border-collapse: collapse;"
+                                                           cellpadding="10px">
+                                                        <tbody>
+                                                            <tr style="border-top:1px solid black">
+                                                                <td style="width: 25%;border-right: 1px solid black;padding:10px;">
+                                                                    <b>MARKS &amp; NO.</b>
+                                                                    <br/>
+                                                                    <span t-field="o.marks_no"/>
+                                                                </td>
+                                                                <td style="width: 25%;border-right: 1px solid black;padding:10px;">
+                                                                    <b>NO&amp;KIND OF
+                                                                        PKGS.
+                                                                    </b>
+                                                                    <br/>
+                                                                    <span t-field="o.kind_of_pkgs"/>
+                                                                </td>
+                                                                <td style="width: 25%;border-right: 1px solid black;padding:10px;">
+                                                                    <b>DES.OF GOODS</b>
+                                                                    <br/>
+                                                                    <span t-field="o.des_of_goods"/>
+                                                                </td>
+                                                                <td style="width: 25%;padding:10px;">
+                                                                    <b>CONTAINER NO.</b>
+                                                                    <br/>
+                                                                    <span t-field="o.container_no"/>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td style="border-right:1px solid black;border-bottom:1px solid black;">
+                                    <table style="width: 100%;border-collapse: collapse;" cellpadding="10px">
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="2"
+                                                    style="border-top: 1px solid black;border-bottom: 1px solid black;padding:10px;">
+                                                    <b>INVOICE NO:</b>
+                                                    <span t-field="o.inv_number"/>
+                                                </td>
+                                            </tr>
+                                            <tr style="border-top: 1px solid black;border-bottom: 1px solid black;">
+                                                <td colspan="2" style="padding:10px;">
+                                                    <b>EXPORTERS REF:</b>
+                                                    <span t-field="o.exporters_ref"/>
+                                                </td>
+                                            </tr>
+                                            <tr style="border-top: 1px solid black;border-bottom: 1px solid black;">
+                                                <td colspan="2"
+                                                    style="border-top: 1px solid black;border-bottom: 1px solid black;padding:10px;">
+                                                    <b>BUYERS ORDER NO. :</b>
+                                                    <span t-field="o.buyer_order_no"/>
+                                                </td>
+                                            </tr>
+                                            <tr style="border-top: 1px solid black;border-bottom: 1px solid black;">
+                                                <td colspan="2"
+                                                    style="border-top: 1px solid black;border-bottom: 1px solid black;padding:10px;">
+                                                    <b>BUYER (IF OTHER THAN CONSIGNEE) NOT APPLICABLE:
+                                                    </b>
+                                                    <br/>
+                                                    data
+                                                </td>
+                                            </tr>
+                                            <tr style="border-top: 1px solid black;border-bottom: 1px solid black;">
+                                                <td style="border-top: 1px solid black;border-bottom: 1px solid black;border-right: 1px solid black;padding:10px;">
+                                                    <b>ORIGIN :</b>
+                                                    <br/>
+                                                    <span t-field="o.origin"/>
+                                                </td>
+                                                <td style="border-top: 1px solid black;border-bottom: 1px solid black;padding:10px;">
+                                                    <b>DESTINATION :</b>
+                                                    <br/>
+                                                    <span t-field="o.destination"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="padding:10px;">
+                                                    <b>TERMS OF DELIVERY OF PAYMENTS :</b>
+                                                    <br/>
+                                                    <span t-field="o.terms_of_payments"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <br/>
+                    <t t-set="total_amount" t-value="0"/>
+                    <table style="width: 100%;border-color: black;border: 1px solid black;border-collapse:collapse">
+                        <tbody>
+                            <tr style="border: 1px solid black;">
+                                <th style="border: 1px solid black;padding:10px">PRODUCT</th>
+                                <th style="border: 1px solid black;padding:10px">QUANTITY</th>
+                                <th style="border: 1px solid black;padding:10px">CGST</th>
+                                <th style="border: 1px solid black;padding:10px">SGST</th>
+                                <th style="border: 1px solid black;padding:10px">IGST</th>
+                                <th style="border: 1px solid black;padding:10px">RATE FOB INR</th>
+                                <th style="border: 1px solid black;padding:10px">AMOUNT (INR)</th>
+                            </tr>
+                            <t t-if="o.related_sale_ids">
+                                <t t-foreach="o.related_sale_ids" t-as="order">
+                                    <t t-foreach="order.order_line" t-as="line">
+                                        <tr>
+                                            <td style="padding:10px">
+                                                <span t-field="line.product_id.name"/>
+                                            </td>
+                                            <td style="border: 1px solid black;padding:10px;">
+                                                <span t-field="line.product_uom_qty"/>
+                                            </td>
+                                            <td style="border: 1px solid black;padding:10px;">
+                                                <span t-field="line.cgst"/>
+                                            </td>
+                                            <td style="border: 1px solid black;padding:10px;">
+                                                <span t-field="line.sgst"/>
+                                            </td>
+                                            <td style="border: 1px solid black;padding:10px;">
+                                                <span t-field="line.igst"/>
+                                            </td>
+                                            <td style="border: 1px solid black;padding:10px;">
+                                                <span t-field="line.price_subtotal"/>
+                                            </td>
+<!--                                            <td t-set="total_amount"-->
+<!--                                               t-value="total_amount + line.price_subtotal "/>-->
+                                        </tr>
+                                    </t>
+                                </t>
+                            </t>
+                            <t t-if="not o.related_sale_ids">
+                                <t t-foreach="o.order_line" t-as="line">
+                                    <tr>
+                                        <td style="padding:10px">
+                                            <span t-field="line.product_id.name"/>
+                                        </td>
+                                        <td style="border: 1px solid black;padding:10px;">
+                                            <span t-field="line.product_uom_qty"/>
+                                        </td>
+                                        <td style="border: 1px solid black;padding:10px;">
+                                                <span t-field="line.cgst"/>
+                                            </td>
+                                        <td style="border: 1px solid black;padding:10px;">
+                                            <span t-field="line.sgst"/>
+                                        </td>
+                                        <td style="border: 1px solid black;padding:10px;">
+                                                <span t-field="line.igst"/>
+                                        </td>
+                                        <td style="border: 1px solid black;padding:10px;">
+                                            <span t-field="line.price_subtotal"/>
+                                        </td>
+<!--                                        <td style="border: 1px solid black;padding:10px;">-->
+<!--                                            <span t-field="line.price_subtotal"/>-->
+<!--                                        </td>-->
+<!--                                        <t t-set="total_amount"-->
+<!--                                           t-value="total_amount + line.price_subtotal "/>-->
+                                    </tr>
+                                </t>
+                            </t>
+                            <tr>
+                                <td style="padding:0px 0px 20px 10px">
+                                    <b>GST : </b> <span t-field="o.company_id.vat"/>
+                                </td>
+                                <td style="border-left: 2px solid black;padding:10px;"></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <th colspan="6" style="border: 1px solid black;padding:10px">AMOUNT CHARGEABLE :
+                                    <br/>
+                                </th>
+                                <td style="border: 1px solid black;padding:10px">
+                                    <span t-esc="o.amount_total"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table style="width: 100%; border: 1px solid black;padding:10px;">
+                        <tbody>
+                            <tr style="border: 1px solid black;">
+                               <th style="border: 1px solid black;width:50%;padding:10px">AMOUNT CHARGEABLE :
+                                    <br/>
+                                    (IN WORDS)
+                                </th>
+                                    <td style="border: 1px solid black;width:50%;padding:10px">
+                                        <span t-esc="o.conv(o.amount_total)" style="text-transform:uppercase;"/>
+                                    </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

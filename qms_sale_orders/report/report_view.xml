@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+
+        <report
+            string="Kit Report"
+            id="sale_kit_report"
+            model="sale.order"
+            name="qms_sale_orders.report_saleorder_kit"
+            file="qms_sale_orders.report_saleorder_kit"
+            report_type="qweb-pdf"
+            menu="False"
+        />
+
+    </data>
+</odoo>

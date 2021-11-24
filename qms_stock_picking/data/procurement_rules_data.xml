@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <record id="sample_location_procurement_rule" model="procurement.rule">
+            <field name="name">Sample Location</field>
+            <field name="location_id" ref="qms_stock_picking.stock_location_sample_order_wh"/>
+            <field name="location_src_id" ref="qms_stock_picking.stock_location_sample_order_wh"/>
+            <field name="picking_type_id" ref="qms_stock_picking.sample_order_picking_type"/>
+            <field name="action">manufacture</field>
+            <field name="name">Sample Location</field>
+            <field name="route_id">11</field>
+        </record>
+    </data>
+</odoo>
